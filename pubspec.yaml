@@ -1,0 +1,61 @@
+name: game_browser_using_bloc
+description: A Demo Project using Bloc Pattern State Management
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.16.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  flutter_dotenv: ^5.0.2
+  equatable: ^2.0.3
+  flutter_bloc: ^8.0.1
+  http: ^0.13.4
+  built_value: ^8.3.0
+  built_collection: ^5.0.0
+  flutter_rating_bar: ^4.0.1
+  carousel_slider: ^4.1.1
+  intl: ^0.17.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^1.0.0
+  build_runner: ^1.0.0
+  built_value_generator: ^8.3.0
+
+# The following section is specific to Flutter.
+flutter:
+
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - .env
+    # - images/a_dot_ham.jpeg
+
+  fonts:
+    - family: Rubik 
+      fonts:
+        - asset: assets/fonts/rubik/Rubik-Black.ttf
+        - asset: assets/fonts/rubik/Rubik-BlackItalic.ttf
+        - asset: assets/fonts/rubik/Rubik-Bold.ttf
+        - asset: assets/fonts/rubik/Rubik-BoldItalic.ttf
+        - asset: assets/fonts/rubik/Rubik-ExtraBold.ttf
+        - asset: assets/fonts/rubik/Rubik-ExtraBoldItalic.ttf
+        - asset: assets/fonts/rubik/Rubik-Italic.ttf
+        - asset: assets/fonts/rubik/Rubik-Light.ttf
+        - asset: assets/fonts/rubik/Rubik-LightItalic.ttf
+        - asset: assets/fonts/rubik/Rubik-Medium.ttf
+        - asset: assets/fonts/rubik/Rubik-MediumItalic.ttf
+        - asset: assets/fonts/rubik/Rubik-Regular.ttf
+        - asset: assets/fonts/rubik/Rubik-SemiBold.ttf
+        - asset: assets/fonts/rubik/Rubik-SemiBoldItalic.ttf
+
