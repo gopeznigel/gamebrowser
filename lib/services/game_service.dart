@@ -49,7 +49,29 @@ class GameService {
           throw Exception('Empty response');
         }
       } else {
-        throw Exception('Error getting games');
+        final gameType = genreId != null ? 'Genre[$genreId]' : 'All';
+        throw Exception('Error getting $gameType games');
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<GamesDto?> getNewGames() async {
+    try {
+      final http.Response response = await _get('games/lists/recent-games');
+
+      if (response.statusCode == 200) {
+        if (response.body.isNotEmpty) {
+          final data = response.body;
+          final decoded = json.decode(data);
+
+          return serializers.deserializeWith(GamesDto.serializer, decoded);
+        } else {
+          throw Exception('Empty response');
+        }
+      } else {
+        throw Exception('Error getting new games');
       }
     } catch (e) {
       throw Exception(e.toString());

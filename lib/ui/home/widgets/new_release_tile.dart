@@ -12,13 +12,13 @@ class NewReleaseTile extends StatefulWidget {
     Key? key,
     required this.imageUrl,
     required this.name,
-    required this.metascore,
     required this.releasedDate,
+    this.metascore,
   }) : super(key: key);
 
   final String imageUrl;
   final String name;
-  final int metascore;
+  final int? metascore;
   final String releasedDate;
 
   @override
@@ -103,7 +103,7 @@ class _NewReleaseTileState extends State<NewReleaseTile>
               ),
               child: Center(
                 child: Text(
-                  widget.metascore.toString(),
+                  widget.metascore?.toString() ?? 'No score yet',
                   textAlign: TextAlign.center,
                   style: TextStyles.tag,
                 ),
@@ -119,7 +119,7 @@ class _NewReleaseTileState extends State<NewReleaseTile>
                 child: Container(
                   height: 60,
                   width: MediaQuery.of(context).size.width * 0.4,
-                  color: Colors.grey.withOpacity(0.3),
+                  color: Colors.grey.shade200.withOpacity(0.4),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -128,8 +128,10 @@ class _NewReleaseTileState extends State<NewReleaseTile>
                         child: Text(
                           widget.name,
                           textAlign: TextAlign.center,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyles.title.copyWith(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -138,7 +140,7 @@ class _NewReleaseTileState extends State<NewReleaseTile>
                         formattedDate,
                         textAlign: TextAlign.center,
                         style: TextStyles.subTitle.copyWith(
-                          color: Colors.white.withOpacity(0.8),
+                          color: Colors.white,
                         ),
                       ),
                       const SizedBox(height: 10),
