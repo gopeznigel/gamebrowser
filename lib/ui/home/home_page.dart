@@ -7,6 +7,7 @@ import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
 import 'package:game_browser_using_bloc/ui/home/loading_home_view.dart';
 import 'package:game_browser_using_bloc/ui/home/widgets/game_collection_tile.dart';
+import 'package:game_browser_using_bloc/ui/home/widgets/go_button.dart';
 import 'package:game_browser_using_bloc/ui/home/widgets/new_release_tile.dart';
 
 import '../../constants/strings.dart';
@@ -55,18 +56,45 @@ class HomePage extends StatelessWidget {
     final _carouselHeight = MediaQuery.of(context).size.width * 0.9;
 
     final _titleNewRelease = Padding(
-      padding: EdgeInsets.only(left: leftPadding),
-      child: Text(
-        newReleasesTitle,
-        style: TextStyles.header,
+      padding: EdgeInsets.only(
+        left: leftPadding,
+        right: leftPadding,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            newReleasesTitle,
+            style: TextStyles.header,
+          ),
+          GoButton(
+            onTap: () {
+              debugPrint('Go to new release games page');
+            },
+          ),
+        ],
       ),
     );
 
     final _titleGameCollections = Padding(
-      padding: EdgeInsets.only(left: leftPadding, top: leftPadding),
-      child: Text(
-        gameCollectionsTitle,
-        style: TextStyles.headerAlt,
+      padding: EdgeInsets.only(
+        left: leftPadding,
+        top: leftPadding,
+        right: leftPadding,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            gameCollectionsTitle,
+            style: TextStyles.headerAlt,
+          ),
+          GoButton(
+            onTap: () {
+              debugPrint('Go to all games page');
+            },
+          ),
+        ],
       ),
     );
 
