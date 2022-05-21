@@ -1,11 +1,13 @@
 import 'dart:ui';
 
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 
-class NewReleaseTile extends StatelessWidget {
+class NewReleaseTile extends StatefulWidget {
   const NewReleaseTile({
     Key? key,
     required this.imageUrl,
@@ -20,8 +22,37 @@ class NewReleaseTile extends StatelessWidget {
   final String releasedDate;
 
   @override
+  State<NewReleaseTile> createState() => _NewReleaseTileState();
+}
+
+class _NewReleaseTileState extends State<NewReleaseTile>
+    with AutomaticKeepAliveClientMixin {
+  ExtendedNetworkImageProvider? _provider;
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _provider = ExtendedNetworkImageProvider(widget.imageUrl, cache: true);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (_provider != null) {
+      precacheImage(_provider!, context);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final rawDate = DateFormat('yyyy-MM-dd').parse(releasedDate);
+    super.build(context);
+
+    final rawDate = DateFormat('yyyy-MM-dd').parse(widget.releasedDate);
     final formattedDate = DateFormat('MMM dd, yyyy').format(rawDate);
 
     return Center(
@@ -29,16 +60,33 @@ class NewReleaseTile extends StatelessWidget {
         clipBehavior: Clip.none,
         alignment: Alignment.center,
         children: [
-          Container(
+          SizedBox(
             height: 300,
             width: MediaQuery.of(context).size.width * 0.5,
-            decoration: BoxDecoration(
-              color: AppColors.gray,
+            child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(
-                image: NetworkImage(imageUrl),
-                fit: BoxFit.cover,
-              ),
+              child: _provider != null
+                  ? ExtendedImage(
+                      image: _provider!,
+                      fit: BoxFit.cover,
+                      loadStateChanged: (ExtendedImageState state) {
+                        switch (state.extendedImageLoadState) {
+                          case LoadState.loading:
+                            return Shimmer.fromColors(
+                              baseColor: Colors.grey.shade300,
+                              highlightColor: Colors.grey.shade100,
+                              child: Container(
+                                color: Colors.white,
+                              ),
+                            );
+                          default:
+                            return null;
+                        }
+                      },
+                    )
+                  : Container(
+                      color: Colors.grey,
+                    ),
             ),
           ),
           Positioned(
@@ -55,7 +103,7 @@ class NewReleaseTile extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  metascore.toString(),
+                  widget.metascore.toString(),
                   textAlign: TextAlign.center,
                   style: TextStyles.tag,
                 ),
@@ -78,7 +126,7 @@ class NewReleaseTile extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
-                          name,
+                          widget.name,
                           textAlign: TextAlign.center,
                           style: TextStyles.title.copyWith(
                             color: Colors.white.withOpacity(0.8),
