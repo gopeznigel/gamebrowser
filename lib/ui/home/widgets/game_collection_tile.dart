@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
+import 'package:game_browser_using_bloc/ui/home/widgets/frosted_container.dart';
 import 'package:game_browser_using_bloc/ui/home/widgets/tag_container.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
@@ -59,6 +60,60 @@ class _GameCollectionTileState extends State<GameCollectionTile>
   Widget build(BuildContext context) {
     super.build(context);
 
+    final _gameImage = ExtendedImage(
+      image: _provider!,
+      fit: BoxFit.cover,
+      loadStateChanged: (ExtendedImageState state) {
+        switch (state.extendedImageLoadState) {
+          case LoadState.loading:
+            return Shimmer.fromColors(
+              baseColor: Colors.grey.shade300,
+              highlightColor: Colors.grey.shade100,
+              child: Container(
+                color: Colors.white,
+              ),
+            );
+          default:
+            return null;
+        }
+      },
+    );
+
+    final _info = Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          widget.name,
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyles.title.copyWith(
+            color: Colors.white,
+          ),
+        ),
+        Text(
+          '(${numberFormat.format(double.tryParse(widget.reviewCount.toString()) ?? 0)} Reviews)',
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyles.subTitle.copyWith(
+            color: Colors.white,
+          ),
+        ),
+        if (widget.rating != null)
+          RatingBarIndicator(
+            rating: widget.rating!,
+            itemBuilder: (context, index) => const Icon(
+              Icons.star,
+              color: Colors.amber,
+            ),
+            itemCount: 5,
+            itemSize: 10.0,
+          ),
+      ],
+    );
+
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -67,33 +122,24 @@ class _GameCollectionTileState extends State<GameCollectionTile>
           width: widget.size,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.shade500,
-                  blurRadius: 3,
-                  offset: const Offset(1, 1)),
-            ],
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: _provider != null
-                ? ExtendedImage(
-                    image: _provider!,
-                    fit: BoxFit.cover,
-                    loadStateChanged: (ExtendedImageState state) {
-                      switch (state.extendedImageLoadState) {
-                        case LoadState.loading:
-                          return Shimmer.fromColors(
-                            baseColor: Colors.grey.shade300,
-                            highlightColor: Colors.grey.shade100,
-                            child: Container(
-                              color: Colors.white,
-                            ),
-                          );
-                        default:
-                          return null;
-                      }
-                    },
+                ? Stack(
+                    alignment: Alignment.center,
+                    fit: StackFit.expand,
+                    children: [
+                      _gameImage,
+                      Positioned(
+                        bottom: 0,
+                        child: FrostedContainer(
+                          height: 60,
+                          width: widget.size,
+                          child: _info,
+                        ),
+                      ),
+                    ],
                   )
                 : Container(
                     color: Colors.grey,
@@ -109,54 +155,6 @@ class _GameCollectionTileState extends State<GameCollectionTile>
               color: AppColors.greenTag,
             ),
           ),
-        Positioned(
-          bottom: -1,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
-              child: Container(
-                height: 60,
-                width: widget.size,
-                color: Colors.grey.shade200.withOpacity(0.4),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      widget.name,
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyles.title.copyWith(
-                        color: Colors.white,
-                      ),
-                    ),
-                    Text(
-                      '(${numberFormat.format(double.tryParse(widget.reviewCount.toString()) ?? 0)} Reviews)',
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyles.subTitle.copyWith(
-                        color: Colors.white,
-                      ),
-                    ),
-                    if (widget.rating != null)
-                      RatingBarIndicator(
-                        rating: widget.rating!,
-                        itemBuilder: (context, index) => const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        itemCount: 5,
-                        itemSize: 10.0,
-                      ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        )
       ],
     );
   }

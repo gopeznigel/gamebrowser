@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:game_browser_using_bloc/constants/strings.dart';
 import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
+import 'package:game_browser_using_bloc/ui/home/widgets/frosted_container.dart';
 import 'package:game_browser_using_bloc/ui/home/widgets/tag_container.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
@@ -54,8 +55,35 @@ class _NewReleaseTileState extends State<NewReleaseTile>
   Widget build(BuildContext context) {
     super.build(context);
 
-    final rawDate = DateFormat('yyyy-MM-dd').parse(widget.releasedDate);
-    final formattedDate = DateFormat('MMM dd, yyyy').format(rawDate);
+    final _formattedDate = DateFormat('MMM dd, yyyy')
+        .format(DateFormat('yyyy-MM-dd').parse(widget.releasedDate));
+
+    final _info = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Text(
+            widget.name,
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyles.title.copyWith(
+              color: Colors.white,
+            ),
+          ),
+        ),
+        const SizedBox(height: 3),
+        Text(
+          '$releasedText $_formattedDate',
+          textAlign: TextAlign.center,
+          style: TextStyles.subTitle.copyWith(
+            color: Colors.white,
+          ),
+        ),
+        const SizedBox(height: 10),
+      ],
+    );
 
     return Center(
       child: Stack(
@@ -112,39 +140,10 @@ class _NewReleaseTileState extends State<NewReleaseTile>
             bottom: -20,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
-                child: Container(
-                  height: 60,
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  color: Colors.grey.shade200.withOpacity(0.4),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          widget.name,
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyles.title.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 3),
-                      Text(
-                        '$releasedText $formattedDate',
-                        textAlign: TextAlign.center,
-                        style: TextStyles.subTitle.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                    ],
-                  ),
-                ),
+              child: FrostedContainer(
+                height: 60,
+                width: MediaQuery.of(context).size.width * 0.4,
+                child: _info,
               ),
             ),
           ),
