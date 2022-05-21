@@ -46,25 +46,44 @@ class HomePage extends StatelessWidget {
       );
 
   Widget _home(BuildContext context, NewGameState state) {
-    final _carousel = CarouselSlider(
-      options: CarouselOptions(
-        aspectRatio: 1,
-        viewportFraction: 0.58,
-      ),
-      items: List.generate(
-        5,
-        (int i) => NewReleaseTile(
-          key: Key(i.toString()),
-          imageUrl: state.games!.results![i].backgroundImage!,
-          name: state.games!.results![i].name!,
-          metascore: state.games!.results![i].metacritic,
-          releasedDate: state.games!.results![i].released!,
+    final leftPadding = MediaQuery.of(context).size.width * 0.1;
+    final _carouselHeight = MediaQuery.of(context).size.width * 0.9;
+
+    final _carousel = Stack(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          height: _carouselHeight,
         ),
-      ),
+        Positioned(
+          left: leftPadding * -1,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: CarouselSlider(
+              options: CarouselOptions(
+                viewportFraction: 0.7,
+                height: _carouselHeight,
+                enableInfiniteScroll: false,
+                clipBehavior: Clip.none,
+              ),
+              items: List.generate(
+                7,
+                (int i) => NewReleaseTile(
+                  key: Key(i.toString()),
+                  imageUrl: state.games!.results![i].backgroundImage!,
+                  name: state.games!.results![i].name!,
+                  metascore: state.games!.results![i].metacritic,
+                  releasedDate: state.games!.results![i].released!,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
 
     final _title = Padding(
-      padding: const EdgeInsets.only(left: 30),
+      padding: EdgeInsets.only(left: leftPadding),
       child: Text(
         homeTitle,
         style: TextStyles.header,

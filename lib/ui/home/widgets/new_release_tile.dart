@@ -60,9 +60,18 @@ class _NewReleaseTileState extends State<NewReleaseTile>
         clipBehavior: Clip.none,
         alignment: Alignment.center,
         children: [
-          SizedBox(
-            height: 300,
-            width: MediaQuery.of(context).size.width * 0.5,
+          Container(
+            height: MediaQuery.of(context).size.width * 0.8,
+            width: MediaQuery.of(context).size.width * 0.6,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey.shade500,
+                    blurRadius: 3,
+                    offset: const Offset(1, 1)),
+              ],
+            ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: _provider != null

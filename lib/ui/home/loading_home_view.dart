@@ -7,30 +7,52 @@ class LoadingHomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final leftPadding = MediaQuery.of(context).size.width * 0.1;
+    final _carouselHeight = MediaQuery.of(context).size.width * 0.8;
+
+    final _carousel = CarouselSlider(
+      options: CarouselOptions(
+        viewportFraction: 0.7,
+        height: MediaQuery.of(context).size.width * 0.8,
+        enableInfiniteScroll: false,
+        scrollPhysics: const NeverScrollableScrollPhysics(),
+        clipBehavior: Clip.none,
+      ),
+      items: List.generate(
+        3,
+        (int i) => ShimmerContainer(
+          height: MediaQuery.of(context).size.width * 0.8,
+          width: MediaQuery.of(context).size.width * 0.6,
+        ),
+      ),
+    );
+
+    final _carouselView = Stack(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          height: _carouselHeight,
+        ),
+        Positioned(
+          left: leftPadding * -1,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: _carousel,
+          ),
+        ),
+      ],
+    );
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(left: 30),
-          child: ShimmerContainer(width: 200, height: 40),
+        Padding(
+          padding: EdgeInsets.only(left: leftPadding),
+          child: const ShimmerContainer(width: 200, height: 40),
         ),
-        const SizedBox(height: 50),
-        CarouselSlider(
-          options: CarouselOptions(
-            aspectRatio: 1.3,
-            viewportFraction: 0.55,
-            initialPage: 1,
-            scrollPhysics: const NeverScrollableScrollPhysics(),
-          ),
-          items: List.generate(
-            3,
-            (int i) => ShimmerContainer(
-              height: 300,
-              width: MediaQuery.of(context).size.width * 0.5,
-            ),
-          ),
-        ),
+        const SizedBox(height: 30),
+        _carouselView,
       ],
     );
   }
