@@ -24,7 +24,7 @@ class HomePage extends StatelessWidget {
 
               if (newGameState.status.isLoaded &&
                   allGameState.status.isLoaded) {
-                _view = _home(context, newGameState);
+                _view = _home(context, allGameState, newGameState);
               } else {
                 _view = const LoadingHomeView();
               }
@@ -45,9 +45,26 @@ class HomePage extends StatelessWidget {
         },
       );
 
-  Widget _home(BuildContext context, NewGameState state) {
+  Widget _home(
+      BuildContext context, GameState allGameState, NewGameState newGameState) {
     final leftPadding = MediaQuery.of(context).size.width * 0.1;
     final _carouselHeight = MediaQuery.of(context).size.width * 0.9;
+
+    final _titleNewRelease = Padding(
+      padding: EdgeInsets.only(left: leftPadding),
+      child: Text(
+        newReleasesTitle,
+        style: TextStyles.header,
+      ),
+    );
+
+    final _titleGameCollections = Padding(
+      padding: EdgeInsets.only(left: leftPadding),
+      child: Text(
+        gameCollectionsTitle,
+        style: TextStyles.header,
+      ),
+    );
 
     final _carousel = Stack(
       children: [
@@ -70,10 +87,10 @@ class HomePage extends StatelessWidget {
                 7,
                 (int i) => NewReleaseTile(
                   key: Key(i.toString()),
-                  imageUrl: state.games!.results![i].backgroundImage!,
-                  name: state.games!.results![i].name!,
-                  metascore: state.games!.results![i].metacritic,
-                  releasedDate: state.games!.results![i].released!,
+                  imageUrl: newGameState.games!.results![i].backgroundImage!,
+                  name: newGameState.games!.results![i].name!,
+                  metascore: newGameState.games!.results![i].metacritic,
+                  releasedDate: newGameState.games!.results![i].released!,
                 ),
               ),
             ),
@@ -82,19 +99,11 @@ class HomePage extends StatelessWidget {
       ],
     );
 
-    final _title = Padding(
-      padding: EdgeInsets.only(left: leftPadding),
-      child: Text(
-        homeTitle,
-        style: TextStyles.header,
-      ),
-    );
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _title,
+        _titleNewRelease,
         _carousel,
       ],
     );

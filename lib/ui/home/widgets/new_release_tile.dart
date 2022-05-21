@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:game_browser_using_bloc/constants/strings.dart';
 import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
 import 'package:intl/intl.dart';
@@ -112,7 +113,7 @@ class _NewReleaseTileState extends State<NewReleaseTile>
               ),
               child: Center(
                 child: Text(
-                  widget.metascore?.toString() ?? 'No score yet',
+                  widget.metascore?.toString() ?? noScoreText,
                   textAlign: TextAlign.center,
                   style: TextStyles.tag,
                 ),
@@ -146,7 +147,7 @@ class _NewReleaseTileState extends State<NewReleaseTile>
                       ),
                       const SizedBox(height: 3),
                       Text(
-                        formattedDate,
+                        '$releasedText $formattedDate',
                         textAlign: TextAlign.center,
                         style: TextStyles.subTitle.copyWith(
                           color: Colors.white,
