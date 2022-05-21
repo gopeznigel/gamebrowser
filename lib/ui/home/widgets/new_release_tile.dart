@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:game_browser_using_bloc/constants/strings.dart';
 import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
+import 'package:game_browser_using_bloc/ui/home/widgets/tag_container.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -99,27 +100,14 @@ class _NewReleaseTileState extends State<NewReleaseTile>
                     ),
             ),
           ),
-          Positioned(
-            top: -6.5,
-            left: 20,
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 5,
-                vertical: 2,
-              ),
-              decoration: BoxDecoration(
-                color: AppColors.ratings,
-                borderRadius: BorderRadius.circular(50),
-              ),
-              child: Center(
-                child: Text(
-                  widget.metascore?.toString() ?? noScoreText,
-                  textAlign: TextAlign.center,
-                  style: TextStyles.tag,
-                ),
+          if (widget.metascore != null)
+            Positioned(
+              top: -6.5,
+              left: 20,
+              child: TagContainer(
+                tag: widget.metascore!.toString(),
               ),
             ),
-          ),
           Positioned(
             bottom: -20,
             child: ClipRRect(

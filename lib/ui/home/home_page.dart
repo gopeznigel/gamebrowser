@@ -6,6 +6,7 @@ import 'package:game_browser_using_bloc/blocs/new_games/new_game_bloc.dart';
 import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
 import 'package:game_browser_using_bloc/ui/home/loading_home_view.dart';
+import 'package:game_browser_using_bloc/ui/home/widgets/game_collection_tile.dart';
 import 'package:game_browser_using_bloc/ui/home/widgets/new_release_tile.dart';
 
 import '../../constants/strings.dart';
@@ -32,11 +33,14 @@ class HomePage extends StatelessWidget {
               return Scaffold(
                 backgroundColor: AppColors.scaffoldBg,
                 body: SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 30,
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 30,
+                        bottom: 30,
+                      ),
+                      child: _view,
                     ),
-                    child: _view,
                   ),
                 ),
               );
@@ -59,14 +63,14 @@ class HomePage extends StatelessWidget {
     );
 
     final _titleGameCollections = Padding(
-      padding: EdgeInsets.only(left: leftPadding),
+      padding: EdgeInsets.only(left: leftPadding, top: leftPadding),
       child: Text(
         gameCollectionsTitle,
-        style: TextStyles.header,
+        style: TextStyles.headerAlt,
       ),
     );
 
-    final _carousel = Stack(
+    final _carouselNewReleases = Stack(
       children: [
         SizedBox(
           width: double.infinity,
@@ -99,12 +103,38 @@ class HomePage extends StatelessWidget {
       ],
     );
 
+    final _rowGames = SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Padding(
+        padding: EdgeInsets.only(left: leftPadding, top: 30),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: List.generate(
+            10,
+            (int i) => Padding(
+              padding: const EdgeInsets.only(right: 30),
+              child: GameCollectionTile(
+                size: 200,
+                imageUrl: allGameState.games!.results![i].backgroundImage!,
+                name: allGameState.games!.results![i].name!,
+                metaScore: allGameState.games!.results![i].metacritic,
+                rating: allGameState.games!.results![i].rating,
+                reviewCount: allGameState.games!.results![i].ratingsCount!,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _titleNewRelease,
-        _carousel,
+        _carouselNewReleases,
+        _titleGameCollections,
+        _rowGames,
       ],
     );
   }
