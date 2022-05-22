@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_browser_using_bloc/blocs/games/game_bloc.dart';
 import 'package:game_browser_using_bloc/blocs/new_games/new_game_bloc.dart';
+import 'package:game_browser_using_bloc/blocs/view_game/view_game_bloc.dart';
 import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
 import 'package:game_browser_using_bloc/ui/game_details/game_details_page.dart';
@@ -125,13 +126,10 @@ class HomePage extends StatelessWidget {
                   metascore: newGameState.games!.results![i].metacritic,
                   releasedDate: newGameState.games!.results![i].released!,
                   onTap: () {
-                    context.read<NewGameBloc>().add(SelectNewGame(
+                    context.read<ViewGameBloc>().add(SelectGameToView(
                         gameDto: newGameState.games!.results![i]));
 
-                    Navigator.pushNamed(context, GameDetailsPage.route).then(
-                        (value) => context
-                            .read<NewGameBloc>()
-                            .add(RemoveSelectedNewGame()));
+                    Navigator.pushNamed(context, GameDetailsPage.route);
                   },
                 ),
               ),
@@ -159,12 +157,10 @@ class HomePage extends StatelessWidget {
                 rating: allGameState.games!.results![i].rating,
                 reviewCount: allGameState.games!.results![i].ratingsCount!,
                 onTap: () {
-                  context.read<GameBloc>().add(
-                      SelectGame(gameDto: allGameState.games!.results![i]));
+                  context.read<ViewGameBloc>().add(SelectGameToView(
+                      gameDto: allGameState.games!.results![i]));
 
-                  Navigator.pushNamed(context, GameDetailsPage.route).then(
-                      (value) =>
-                          context.read<GameBloc>().add(RemoveSelectedGame()));
+                  Navigator.pushNamed(context, GameDetailsPage.route);
                 },
               ),
             ),
