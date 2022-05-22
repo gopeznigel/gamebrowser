@@ -8,6 +8,7 @@ import 'package:game_browser_using_bloc/ui/game_details/widgets/game_description
 import 'package:game_browser_using_bloc/ui/home/widgets/frosted_container.dart';
 import 'package:game_browser_using_bloc/ui/widgets/game_rating.dart';
 import 'package:game_browser_using_bloc/utils/custom_number_formatter.dart';
+import 'package:shimmer/shimmer.dart';
 
 class GameDetailsPage extends StatelessWidget {
   static const String route = '/gameDetailsPage';
@@ -29,8 +30,9 @@ class GameDetailsPage extends StatelessWidget {
               ),
               _minSpace,
               Text(
-                CustomNumberFormatter().transformToCompact(
-                    double.tryParse(state.game!.ratingsCount.toString()) ?? 0),
+                CustomNumberFormatter().transformToCompact(double.tryParse(
+                        state.gameDetails!.ratingsCount.toString()) ??
+                    0),
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -42,7 +44,7 @@ class GameDetailsPage extends StatelessWidget {
           );
 
           final _genres = Row(
-            children: state.game!.genres!
+            children: state.gameDetails!.genres!
                 .map((genre) => _genreContainer(genre.name!))
                 .toList(),
           );
@@ -83,9 +85,9 @@ class GameDetailsPage extends StatelessWidget {
                       backgroundColor: AppColors.gray,
                       flexibleSpace: FlexibleSpaceBar(
                         background: Hero(
-                          tag: state.game!.backgroundImage!,
+                          tag: state.gameDetails!.backgroundImage!,
                           child: ExtendedImage.network(
-                            state.game!.backgroundImage!,
+                            state.gameDetails!.backgroundImage!,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -94,31 +96,86 @@ class GameDetailsPage extends StatelessWidget {
                   ];
                 },
                 body: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          state.gameDetails!.name,
-                          style: TextStyles.headerAlt,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Text(
+                                state.gameDetails!.name,
+                                style: TextStyles.headerAlt,
+                              ),
+                            ),
+                            _minSpace,
+                            _reviews,
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 20,
+                                bottom: 20,
+                              ),
+                              child: _genres,
+                            ),
+                            GameDescriptionContainer(
+                              key: UniqueKey(),
+                              description: state.gameDetails!.description,
+                            ),
+                          ],
                         ),
-                        _minSpace,
-                        _reviews,
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 20,
-                            bottom: 20,
-                          ),
-                          child: _genres,
+                      ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: state.gameDto!.screenshots!.map((ss) {
+                            if (ss.id < 0) {
+                              return const SizedBox();
+                            }
+
+                            final double width =
+                                MediaQuery.of(context).size.width * 0.6;
+                            final double height = width * (6 / 9);
+                            bool isFirstScreenshot =
+                                (ss == state.gameDto!.screenshots![1]);
+
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                  right: 20, left: !isFirstScreenshot ? 0 : 20),
+                              child: SizedBox(
+                                width: width,
+                                height: height,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: ExtendedImage.network(
+                                    ss.image,
+                                    fit: BoxFit.cover,
+                                    loadStateChanged:
+                                        (ExtendedImageState state) {
+                                      switch (state.extendedImageLoadState) {
+                                        case LoadState.loading:
+                                          return Shimmer.fromColors(
+                                            baseColor: Colors.grey.shade300,
+                                            highlightColor:
+                                                Colors.grey.shade100,
+                                            child: Container(
+                                              color: Colors.white,
+                                            ),
+                                          );
+                                        default:
+                                          return null;
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ),
+                            );
+                          }).toList(),
                         ),
-                        GameDescriptionContainer(
-                          key: UniqueKey(),
-                          description: state.gameDetails!.description,
-                        ),
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
               ),

@@ -79,18 +79,30 @@ abstract class GameDto implements Built<GameDto, GameDtoBuilder> {
   int? get suggestionsCount;
   @BuiltValueField(wireName: 'updated')
   String? get updated;
-  // @BuiltValueField(wireName: 'user_game')
-  // String? get userGame;
   @BuiltValueField(wireName: 'reviews_count')
   int? get reviewsCount;
-  // @BuiltValueField(wireName: 'saturated_color')
-  // String? get saturatedColor;
-  // @BuiltValueField(wireName: 'dominant_color')
-  // String? get dominantColor;
   @BuiltValueField(wireName: 'genres')
   BuiltList<GenreDto>? get genres;
   @BuiltValueField(wireName: 'tags')
   BuiltList<GenreDto>? get tags;
+  @BuiltValueField(wireName: 'short_screenshots')
+  BuiltList<ShortScreenshotDto>? get screenshots;
+}
+
+abstract class ShortScreenshotDto
+    implements Built<ShortScreenshotDto, ShortScreenshotDtoBuilder> {
+  factory ShortScreenshotDto([Function(ShortScreenshotDtoBuilder) updates]) =
+      _$ShortScreenshotDto;
+
+  ShortScreenshotDto._();
+
+  static Serializer<ShortScreenshotDto> get serializer =>
+      _$shortScreenshotDtoSerializer;
+
+  @BuiltValueField(wireName: 'id')
+  int get id;
+  @BuiltValueField(wireName: 'image')
+  String get image;
 }
 
 abstract class GameDetailsDto
@@ -111,12 +123,20 @@ abstract class GameDetailsDto
   String get name;
   @BuiltValueField(wireName: 'name_original')
   String get nameOriginal;
-  @BuiltValueField(wireName: 'description')
+  @BuiltValueField(wireName: 'description_raw')
   String get description;
   @BuiltValueField(wireName: 'metacritic')
   int? get metacritic;
   @BuiltValueField(wireName: 'rating')
   double get rating;
+  @BuiltValueField(wireName: 'genres')
+  BuiltList<GenreDto>? get genres;
+  @BuiltValueField(wireName: 'tags')
+  BuiltList<GenreDto>? get tags;
+  @BuiltValueField(wireName: 'ratings_count')
+  int? get ratingsCount;
+  @BuiltValueField(wireName: 'background_image')
+  String? get backgroundImage;
 }
 
 abstract class GenreDto implements Built<GenreDto, GenreDtoBuilder> {

@@ -38,8 +38,6 @@ class MyApp extends StatelessWidget {
           BlocProvider<ViewGameBloc>(
             create: (context) => ViewGameBloc(
               repository: context.read<GameRepository>(),
-              gameBloc: context.read<GameBloc>(),
-              newGameBloc: context.read<NewGameBloc>(),
             ),
             lazy: false,
           ),

@@ -11,20 +11,24 @@ extension GameDetialsStatusX on GameDetialsStatus {
 
 class ViewGameState extends Equatable {
   final GameDetailsDto? gameDetails;
-  final GameDto? game;
+  final GameDto? gameDto;
   final GameDetialsStatus status;
 
   const ViewGameState(
-      {this.gameDetails, this.game, this.status = GameDetialsStatus.initial});
+      {this.gameDetails,
+      this.gameDto,
+      this.status = GameDetialsStatus.initial});
 
   @override
   List<Object?> get props => [gameDetails, status];
 
   ViewGameState copyWith(
-      {GameDetailsDto? gameDetails, GameDto? game, GameDetialsStatus? status}) {
+      {GameDetailsDto? gameDetails,
+      GameDto? gameDto,
+      GameDetialsStatus? status}) {
     return ViewGameState(
       gameDetails: gameDetails ?? this.gameDetails,
-      game: game ?? this.game,
+      gameDto: gameDto ?? this.gameDto,
       status: status ?? this.status,
     );
   }

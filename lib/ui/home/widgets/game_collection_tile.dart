@@ -60,25 +60,26 @@ class _GameCollectionTileState extends State<GameCollectionTile>
     super.build(context);
 
     final _gameImage = Hero(
-        tag: widget.imageUrl,
-        child: ExtendedImage(
-          image: _provider!,
-          fit: BoxFit.cover,
-          loadStateChanged: (ExtendedImageState state) {
-            switch (state.extendedImageLoadState) {
-              case LoadState.loading:
-                return Shimmer.fromColors(
-                  baseColor: Colors.grey.shade300,
-                  highlightColor: Colors.grey.shade100,
-                  child: Container(
-                    color: Colors.white,
-                  ),
-                );
-              default:
-                return null;
-            }
-          },
-        ));
+      tag: widget.imageUrl,
+      child: ExtendedImage(
+        image: _provider!,
+        fit: BoxFit.cover,
+        loadStateChanged: (ExtendedImageState state) {
+          switch (state.extendedImageLoadState) {
+            case LoadState.loading:
+              return Shimmer.fromColors(
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.grey.shade100,
+                child: Container(
+                  color: Colors.white,
+                ),
+              );
+            default:
+              return null;
+          }
+        },
+      ),
+    );
 
     final _info = Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

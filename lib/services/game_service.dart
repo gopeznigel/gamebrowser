@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:game_browser_using_bloc/models/game_dto.dart';
@@ -41,7 +42,7 @@ class GameService {
 
       if (response.statusCode == 200) {
         if (response.body.isNotEmpty) {
-          final data = response.body;
+          final data = utf8.decode(response.bodyBytes);
           final decoded = json.decode(data);
 
           return serializers.deserializeWith(GamesDto.serializer, decoded);
@@ -63,7 +64,7 @@ class GameService {
 
       if (response.statusCode == 200) {
         if (response.body.isNotEmpty) {
-          final data = response.body;
+          final data = utf8.decode(response.bodyBytes);
           final decoded = json.decode(data);
 
           return serializers.deserializeWith(
@@ -85,7 +86,7 @@ class GameService {
 
       if (response.statusCode == 200) {
         if (response.body.isNotEmpty) {
-          final data = response.body;
+          final data = utf8.decode(response.bodyBytes);
           final decoded = json.decode(data);
 
           return serializers.deserializeWith(GamesDto.serializer, decoded);
@@ -115,7 +116,9 @@ class GameService {
     );
 
     try {
-      return await client.get(apiUrl);
+      return await client.get(
+        apiUrl,
+      );
     } catch (e) {
       throw Exception(e.toString());
     }

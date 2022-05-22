@@ -11,6 +11,7 @@ part 'serializers.g.dart';
   GameDto,
   GenreDto,
   GameDetailsDto,
+  ShortScreenshotDto,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

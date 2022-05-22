@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
-import 'package:game_browser_using_bloc/utils/game_description_formatter.dart';
 
 class GameDescriptionContainer extends StatefulWidget {
   const GameDescriptionContainer({Key? key, required this.description})
@@ -15,20 +14,15 @@ class GameDescriptionContainer extends StatefulWidget {
 }
 
 class _GameDescriptionContainerState extends State<GameDescriptionContainer> {
-  String _desc = '';
-  int minCharsCount = 400;
-  int charsCount = 0;
-  bool someTextsHidden = false;
+  final int _minCharsCount = 400;
+  bool _someTextsHidden = false;
 
   @override
   void initState() {
     super.initState();
 
-    _desc = GameDescriptionFormatter.htmlToText(widget.description);
-    charsCount = _desc.length;
-
-    if (charsCount > minCharsCount) {
-      someTextsHidden = true;
+    if (widget.description.length > _minCharsCount) {
+      _someTextsHidden = true;
     }
   }
 
@@ -38,8 +32,9 @@ class _GameDescriptionContainerState extends State<GameDescriptionContainer> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          _desc,
-          maxLines: someTextsHidden ? 4 : 100,
+          widget.description,
+          textAlign: TextAlign.justify,
+          maxLines: _someTextsHidden ? 4 : 100,
           overflow: TextOverflow.ellipsis,
           style: TextStyles.title.copyWith(
             fontWeight: FontWeight.w300,
@@ -50,11 +45,11 @@ class _GameDescriptionContainerState extends State<GameDescriptionContainer> {
           behavior: HitTestBehavior.opaque,
           onTap: () {
             setState(() {
-              someTextsHidden = !someTextsHidden;
+              _someTextsHidden = !_someTextsHidden;
             });
           },
           child: Text(
-            someTextsHidden ? 'Read more' : 'Read less',
+            _someTextsHidden ? 'Read more' : 'Read less',
             style: TextStyles.tag.copyWith(
               color: AppColors.selected,
               decoration: TextDecoration.underline,
