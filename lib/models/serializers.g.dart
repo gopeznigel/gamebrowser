@@ -16,6 +16,12 @@ Serializers _$serializers = (new Serializers().toBuilder()
           () => new ListBuilder<GameDto>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(GenreDto)]),
+          () => new ListBuilder<GenreDto>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(GenreDto)]),
+          () => new ListBuilder<GenreDto>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(GenreDto)]),
           () => new ListBuilder<GenreDto>()))
     .build();
 

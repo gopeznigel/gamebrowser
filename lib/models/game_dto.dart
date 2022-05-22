@@ -81,16 +81,16 @@ abstract class GameDto implements Built<GameDto, GameDtoBuilder> {
   String? get updated;
   // @BuiltValueField(wireName: 'user_game')
   // String? get userGame;
-  // @BuiltValueField(wireName: 'reviews_count')
-  // int? get reviewsCount;
+  @BuiltValueField(wireName: 'reviews_count')
+  int? get reviewsCount;
   // @BuiltValueField(wireName: 'saturated_color')
   // String? get saturatedColor;
   // @BuiltValueField(wireName: 'dominant_color')
   // String? get dominantColor;
-  // @BuiltValueField(wireName: 'genres')
-  // BuiltList<GenreDto>? get genres;
-  // @BuiltValueField(wireName: 'tags')
-  // BuiltList<GenreDto>? get tags;
+  @BuiltValueField(wireName: 'genres')
+  BuiltList<GenreDto>? get genres;
+  @BuiltValueField(wireName: 'tags')
+  BuiltList<GenreDto>? get tags;
 }
 
 abstract class GenreDto implements Built<GenreDto, GenreDtoBuilder> {

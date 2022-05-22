@@ -5,6 +5,7 @@ import 'package:game_browser_using_bloc/blocs/games/game_bloc.dart';
 import 'package:game_browser_using_bloc/blocs/new_games/new_game_bloc.dart';
 import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
+import 'package:game_browser_using_bloc/ui/game_details/game_details_page.dart';
 import 'package:game_browser_using_bloc/ui/home/loading_home_view.dart';
 import 'package:game_browser_using_bloc/ui/home/widgets/game_collection_tile.dart';
 import 'package:game_browser_using_bloc/ui/home/widgets/go_button.dart';
@@ -123,6 +124,15 @@ class HomePage extends StatelessWidget {
                   name: newGameState.games!.results![i].name!,
                   metascore: newGameState.games!.results![i].metacritic,
                   releasedDate: newGameState.games!.results![i].released!,
+                  onTap: () {
+                    context.read<NewGameBloc>().add(SelectNewGame(
+                        gameDto: newGameState.games!.results![i]));
+
+                    Navigator.pushNamed(context, GameDetailsPage.route).then(
+                        (value) => context
+                            .read<NewGameBloc>()
+                            .add(RemoveSelectedNewGame()));
+                  },
                 ),
               ),
             ),
@@ -148,6 +158,14 @@ class HomePage extends StatelessWidget {
                 metaScore: allGameState.games!.results![i].metacritic,
                 rating: allGameState.games!.results![i].rating,
                 reviewCount: allGameState.games!.results![i].ratingsCount!,
+                onTap: () {
+                  context.read<GameBloc>().add(
+                      SelectGame(gameDto: allGameState.games!.results![i]));
+
+                  Navigator.pushNamed(context, GameDetailsPage.route).then(
+                      (value) =>
+                          context.read<GameBloc>().add(RemoveSelectedGame()));
+                },
               ),
             ),
           ),

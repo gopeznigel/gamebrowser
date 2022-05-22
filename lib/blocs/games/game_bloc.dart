@@ -13,6 +13,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     on<GetAllGames>(_handleGetAllGames);
     on<GetGamesByGenre>(_handleGetGamesByGenre);
     on<SelectGame>(_handleSelectGame);
+    on<RemoveSelectedGame>(_handleRemoveSelectedGame);
   }
 
   void _handleGetAllGames(GetAllGames event, Emitter<GameState> emit) async {
@@ -42,5 +43,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
   void _handleSelectGame(SelectGame event, Emitter<GameState> emit) {
     emit(state.copyWith(selectedGame: event.gameDto));
+  }
+
+  void _handleRemoveSelectedGame(
+      RemoveSelectedGame event, Emitter<GameState> emit) {
+    emit(state.copyWith(selectedGame: null));
   }
 }

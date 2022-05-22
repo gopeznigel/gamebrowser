@@ -272,6 +272,28 @@ class _$GameDtoSerializer implements StructuredSerializer<GameDto> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.reviewsCount;
+    if (value != null) {
+      result
+        ..add('reviews_count')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.genres;
+    if (value != null) {
+      result
+        ..add('genres')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(GenreDto)])));
+    }
+    value = object.tags;
+    if (value != null) {
+      result
+        ..add('tags')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(GenreDto)])));
+    }
     return result;
   }
 
@@ -345,6 +367,22 @@ class _$GameDtoSerializer implements StructuredSerializer<GameDto> {
         case 'updated':
           result.updated = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'reviews_count':
+          result.reviewsCount = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'genres':
+          result.genres.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(GenreDto)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'tags':
+          result.tags.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(GenreDto)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -728,6 +766,12 @@ class _$GameDto extends GameDto {
   final int? suggestionsCount;
   @override
   final String? updated;
+  @override
+  final int? reviewsCount;
+  @override
+  final BuiltList<GenreDto>? genres;
+  @override
+  final BuiltList<GenreDto>? tags;
 
   factory _$GameDto([void Function(GameDtoBuilder)? updates]) =>
       (new GameDtoBuilder()..update(updates))._build();
@@ -747,7 +791,10 @@ class _$GameDto extends GameDto {
       this.metacritic,
       this.playtime,
       this.suggestionsCount,
-      this.updated})
+      this.updated,
+      this.reviewsCount,
+      this.genres,
+      this.tags})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, 'GameDto', 'id');
   }
@@ -777,7 +824,10 @@ class _$GameDto extends GameDto {
         metacritic == other.metacritic &&
         playtime == other.playtime &&
         suggestionsCount == other.suggestionsCount &&
-        updated == other.updated;
+        updated == other.updated &&
+        reviewsCount == other.reviewsCount &&
+        genres == other.genres &&
+        tags == other.tags;
   }
 
   @override
@@ -795,21 +845,35 @@ class _$GameDto extends GameDto {
                                             $jc(
                                                 $jc(
                                                     $jc(
-                                                        $jc($jc(0, id.hashCode),
-                                                            slug.hashCode),
-                                                        name.hashCode),
-                                                    released.hashCode),
-                                                tba.hashCode),
-                                            backgroundImage.hashCode),
-                                        rating.hashCode),
-                                    ratingTop.hashCode),
-                                ratingsCount.hashCode),
-                            reviewsTextCount.hashCode),
-                        added.hashCode),
-                    metacritic.hashCode),
-                playtime.hashCode),
-            suggestionsCount.hashCode),
-        updated.hashCode));
+                                                        $jc(
+                                                            $jc(
+                                                                $jc(
+                                                                    $jc(
+                                                                        $jc(
+                                                                            0,
+                                                                            id
+                                                                                .hashCode),
+                                                                        slug
+                                                                            .hashCode),
+                                                                    name
+                                                                        .hashCode),
+                                                                released
+                                                                    .hashCode),
+                                                            tba.hashCode),
+                                                        backgroundImage
+                                                            .hashCode),
+                                                    rating.hashCode),
+                                                ratingTop.hashCode),
+                                            ratingsCount.hashCode),
+                                        reviewsTextCount.hashCode),
+                                    added.hashCode),
+                                metacritic.hashCode),
+                            playtime.hashCode),
+                        suggestionsCount.hashCode),
+                    updated.hashCode),
+                reviewsCount.hashCode),
+            genres.hashCode),
+        tags.hashCode));
   }
 
   @override
@@ -829,7 +893,10 @@ class _$GameDto extends GameDto {
           ..add('metacritic', metacritic)
           ..add('playtime', playtime)
           ..add('suggestionsCount', suggestionsCount)
-          ..add('updated', updated))
+          ..add('updated', updated)
+          ..add('reviewsCount', reviewsCount)
+          ..add('genres', genres)
+          ..add('tags', tags))
         .toString();
   }
 }
@@ -900,6 +967,20 @@ class GameDtoBuilder implements Builder<GameDto, GameDtoBuilder> {
   String? get updated => _$this._updated;
   set updated(String? updated) => _$this._updated = updated;
 
+  int? _reviewsCount;
+  int? get reviewsCount => _$this._reviewsCount;
+  set reviewsCount(int? reviewsCount) => _$this._reviewsCount = reviewsCount;
+
+  ListBuilder<GenreDto>? _genres;
+  ListBuilder<GenreDto> get genres =>
+      _$this._genres ??= new ListBuilder<GenreDto>();
+  set genres(ListBuilder<GenreDto>? genres) => _$this._genres = genres;
+
+  ListBuilder<GenreDto>? _tags;
+  ListBuilder<GenreDto> get tags =>
+      _$this._tags ??= new ListBuilder<GenreDto>();
+  set tags(ListBuilder<GenreDto>? tags) => _$this._tags = tags;
+
   GameDtoBuilder();
 
   GameDtoBuilder get _$this {
@@ -920,6 +1001,9 @@ class GameDtoBuilder implements Builder<GameDto, GameDtoBuilder> {
       _playtime = $v.playtime;
       _suggestionsCount = $v.suggestionsCount;
       _updated = $v.updated;
+      _reviewsCount = $v.reviewsCount;
+      _genres = $v.genres?.toBuilder();
+      _tags = $v.tags?.toBuilder();
       _$v = null;
     }
     return this;
@@ -940,23 +1024,41 @@ class GameDtoBuilder implements Builder<GameDto, GameDtoBuilder> {
   GameDto build() => _build();
 
   _$GameDto _build() {
-    final _$result = _$v ??
-        new _$GameDto._(
-            id: BuiltValueNullFieldError.checkNotNull(id, 'GameDto', 'id'),
-            slug: slug,
-            name: name,
-            released: released,
-            tba: tba,
-            backgroundImage: backgroundImage,
-            rating: rating,
-            ratingTop: ratingTop,
-            ratingsCount: ratingsCount,
-            reviewsTextCount: reviewsTextCount,
-            added: added,
-            metacritic: metacritic,
-            playtime: playtime,
-            suggestionsCount: suggestionsCount,
-            updated: updated);
+    _$GameDto _$result;
+    try {
+      _$result = _$v ??
+          new _$GameDto._(
+              id: BuiltValueNullFieldError.checkNotNull(id, 'GameDto', 'id'),
+              slug: slug,
+              name: name,
+              released: released,
+              tba: tba,
+              backgroundImage: backgroundImage,
+              rating: rating,
+              ratingTop: ratingTop,
+              ratingsCount: ratingsCount,
+              reviewsTextCount: reviewsTextCount,
+              added: added,
+              metacritic: metacritic,
+              playtime: playtime,
+              suggestionsCount: suggestionsCount,
+              updated: updated,
+              reviewsCount: reviewsCount,
+              genres: _genres?.build(),
+              tags: _tags?.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'genres';
+        _genres?.build();
+        _$failedField = 'tags';
+        _tags?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'GameDto', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

@@ -27,3 +27,8 @@ class SelectGame extends GameEvent {
   @override
   List<Object?> get props => [gameDto];
 }
+
+class RemoveSelectedGame extends GameEvent {
+  @override
+  List<Object?> get props => [];
+}

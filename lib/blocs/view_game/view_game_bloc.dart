@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_browser_using_bloc/blocs/games/game_bloc.dart';
 import 'package:game_browser_using_bloc/blocs/new_games/new_game_bloc.dart';
@@ -23,6 +24,14 @@ class ViewGameBloc extends Bloc<ViewGameEvent, ViewGameState> {
   }) : super(NoGameSelected()) {
     subscription = newGameBloc.stream.listen((state) {
       if (state.selectedGame != null) {
+        debugPrint('Selected New Game ${state.selectedGame!.name}');
+        add(SelectGameToView(gameDto: state.selectedGame!));
+      }
+    });
+
+    subscription = gameBloc.stream.listen((state) {
+      if (state.selectedGame != null) {
+        debugPrint('Selected Game ${state.selectedGame!.name}');
         add(SelectGameToView(gameDto: state.selectedGame!));
       }
     });

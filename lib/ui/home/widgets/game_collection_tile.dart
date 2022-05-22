@@ -5,6 +5,8 @@ import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
 import 'package:game_browser_using_bloc/ui/home/widgets/frosted_container.dart';
 import 'package:game_browser_using_bloc/ui/home/widgets/tag_container.dart';
+import 'package:game_browser_using_bloc/ui/widgets/game_rating.dart';
+import 'package:game_browser_using_bloc/utils/custom_number_formatter.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -15,6 +17,7 @@ class GameCollectionTile extends StatefulWidget {
     required this.imageUrl,
     required this.name,
     required this.reviewCount,
+    required this.onTap,
     this.metaScore,
     this.rating,
   }) : super(key: key);
@@ -25,6 +28,7 @@ class GameCollectionTile extends StatefulWidget {
   final double? rating;
   final String name;
   final int reviewCount;
+  final void Function()? onTap;
 
   @override
   State<GameCollectionTile> createState() => _GameCollectionTileState();
@@ -33,7 +37,6 @@ class GameCollectionTile extends StatefulWidget {
 class _GameCollectionTileState extends State<GameCollectionTile>
     with AutomaticKeepAliveClientMixin {
   ExtendedNetworkImageProvider? _provider;
-  NumberFormat numberFormat = NumberFormat.compact();
 
   @override
   bool get wantKeepAlive => true;
@@ -91,7 +94,7 @@ class _GameCollectionTileState extends State<GameCollectionTile>
           ),
         ),
         Text(
-          '(${numberFormat.format(double.tryParse(widget.reviewCount.toString()) ?? 0)} Reviews)',
+          '(${CustomNumberFormatter().transformToCompact(double.tryParse(widget.reviewCount.toString()) ?? 0)} Reviews)',
           textAlign: TextAlign.center,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -100,60 +103,57 @@ class _GameCollectionTileState extends State<GameCollectionTile>
           ),
         ),
         if (widget.rating != null)
-          RatingBarIndicator(
+          GameRating(
             rating: widget.rating!,
-            itemBuilder: (context, index) => const Icon(
-              Icons.star,
-              color: Colors.amber,
-            ),
-            itemCount: 5,
-            itemSize: 10.0,
           ),
       ],
     );
 
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Container(
-          height: widget.size,
-          width: widget.size,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: _provider != null
-                ? Stack(
-                    alignment: Alignment.center,
-                    fit: StackFit.expand,
-                    children: [
-                      _gameImage,
-                      Positioned(
-                        bottom: 0,
-                        child: FrostedContainer(
-                          height: 60,
-                          width: widget.size,
-                          child: _info,
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
+            height: widget.size,
+            width: widget.size,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: _provider != null
+                  ? Stack(
+                      alignment: Alignment.center,
+                      fit: StackFit.expand,
+                      children: [
+                        _gameImage,
+                        Positioned(
+                          bottom: 0,
+                          child: FrostedContainer(
+                            height: 60,
+                            width: widget.size,
+                            child: _info,
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                : Container(
-                    color: Colors.grey,
-                  ),
-          ),
-        ),
-        if (widget.metaScore != null)
-          Positioned(
-            top: -6.5,
-            left: 20,
-            child: TagContainer(
-              tag: widget.metaScore!.toString(),
-              color: AppColors.greenTag,
+                      ],
+                    )
+                  : Container(
+                      color: Colors.grey,
+                    ),
             ),
           ),
-      ],
+          if (widget.metaScore != null)
+            Positioned(
+              top: -6.5,
+              left: 20,
+              child: TagContainer(
+                tag: widget.metaScore!.toString(),
+                color: AppColors.greenTag,
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

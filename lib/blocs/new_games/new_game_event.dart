@@ -18,3 +18,8 @@ class SelectNewGame extends NewGameEvent {
   @override
   List<Object?> get props => [gameDto];
 }
+
+class RemoveSelectedNewGame extends NewGameEvent {
+  @override
+  List<Object?> get props => [];
+}
