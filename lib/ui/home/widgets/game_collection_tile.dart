@@ -1,13 +1,11 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
 import 'package:game_browser_using_bloc/ui/home/widgets/frosted_container.dart';
 import 'package:game_browser_using_bloc/ui/home/widgets/tag_container.dart';
 import 'package:game_browser_using_bloc/ui/widgets/game_rating.dart';
 import 'package:game_browser_using_bloc/utils/custom_number_formatter.dart';
-import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
 class GameCollectionTile extends StatefulWidget {
