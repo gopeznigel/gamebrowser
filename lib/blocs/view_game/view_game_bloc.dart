@@ -21,7 +21,7 @@ class ViewGameBloc extends Bloc<ViewGameEvent, ViewGameState> {
     required this.repository,
     required this.newGameBloc,
     required this.gameBloc,
-  }) : super(NoGameSelected()) {
+  }) : super(const ViewGameState()) {
     subscription = newGameBloc.stream.listen((state) {
       if (state.selectedGame != null) {
         debugPrint('Selected New Game ${state.selectedGame!.name}');
@@ -37,14 +37,20 @@ class ViewGameBloc extends Bloc<ViewGameEvent, ViewGameState> {
     });
 
     on<SelectGameToView>(_handleSelectGameToView);
-    on<RemoveGameToView>(_handleRemoveGameToView);
   }
 
   void _handleSelectGameToView(
-          SelectGameToView event, Emitter<ViewGameState> emit) =>
-      emit(GameSelected(game: event.gameDto));
+      SelectGameToView event, Emitter<ViewGameState> emit) async {
+    try {
+      emit(state.copyWith(
+          status: GameDetialsStatus.loading, game: event.gameDto));
 
-  void _handleRemoveGameToView(
-          RemoveGameToView event, Emitter<ViewGameState> emit) =>
-      emit(NoGameSelected());
+      final gameDetails = await repository.getGameDetails(event.gameDto.id);
+
+      emit(state.copyWith(
+          gameDetails: gameDetails!, status: GameDetialsStatus.loaded));
+    } catch (e) {
+      emit(state.copyWith(status: GameDetialsStatus.error));
+    }
+  }
 }

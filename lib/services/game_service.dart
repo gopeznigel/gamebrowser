@@ -57,6 +57,28 @@ class GameService {
     }
   }
 
+  Future<GameDetailsDto?> getGameDetails({int? id}) async {
+    try {
+      final http.Response response = await _get('games/$id');
+
+      if (response.statusCode == 200) {
+        if (response.body.isNotEmpty) {
+          final data = response.body;
+          final decoded = json.decode(data);
+
+          return serializers.deserializeWith(
+              GameDetailsDto.serializer, decoded);
+        } else {
+          throw Exception('Empty response');
+        }
+      } else {
+        throw Exception('Error getting game details');
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
   Future<GamesDto?> getNewGames() async {
     try {
       final http.Response response = await _get('games/lists/recent-games');

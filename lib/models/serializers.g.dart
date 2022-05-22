@@ -7,6 +7,7 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(GameDetailsDto.serializer)
       ..add(GameDto.serializer)
       ..add(GamesDto.serializer)
       ..add(GenreDto.serializer)

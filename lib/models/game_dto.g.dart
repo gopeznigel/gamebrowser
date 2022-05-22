@@ -9,6 +9,8 @@ part of 'game_dto.dart';
 Serializer<GamesDto> _$gamesDtoSerializer = new _$GamesDtoSerializer();
 Serializer<GenresDto> _$genresDtoSerializer = new _$GenresDtoSerializer();
 Serializer<GameDto> _$gameDtoSerializer = new _$GameDtoSerializer();
+Serializer<GameDetailsDto> _$gameDetailsDtoSerializer =
+    new _$GameDetailsDtoSerializer();
 Serializer<GenreDto> _$genreDtoSerializer = new _$GenreDtoSerializer();
 
 class _$GamesDtoSerializer implements StructuredSerializer<GamesDto> {
@@ -383,6 +385,90 @@ class _$GameDtoSerializer implements StructuredSerializer<GameDto> {
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(GenreDto)]))!
               as BuiltList<Object?>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GameDetailsDtoSerializer
+    implements StructuredSerializer<GameDetailsDto> {
+  @override
+  final Iterable<Type> types = const [GameDetailsDto, _$GameDetailsDto];
+  @override
+  final String wireName = 'GameDetailsDto';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, GameDetailsDto object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      'slug',
+      serializers.serialize(object.slug, specifiedType: const FullType(String)),
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'name_original',
+      serializers.serialize(object.nameOriginal,
+          specifiedType: const FullType(String)),
+      'description',
+      serializers.serialize(object.description,
+          specifiedType: const FullType(String)),
+      'rating',
+      serializers.serialize(object.rating,
+          specifiedType: const FullType(double)),
+    ];
+    Object? value;
+    value = object.metacritic;
+    if (value != null) {
+      result
+        ..add('metacritic')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    return result;
+  }
+
+  @override
+  GameDetailsDto deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GameDetailsDtoBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+        case 'slug':
+          result.slug = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'name_original':
+          result.nameOriginal = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'description':
+          result.description = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'metacritic':
+          result.metacritic = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'rating':
+          result.rating = serializers.deserialize(value,
+              specifiedType: const FullType(double))! as double;
           break;
       }
     }
@@ -1059,6 +1145,175 @@ class GameDtoBuilder implements Builder<GameDto, GameDtoBuilder> {
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GameDetailsDto extends GameDetailsDto {
+  @override
+  final int id;
+  @override
+  final String slug;
+  @override
+  final String name;
+  @override
+  final String nameOriginal;
+  @override
+  final String description;
+  @override
+  final int? metacritic;
+  @override
+  final double rating;
+
+  factory _$GameDetailsDto([void Function(GameDetailsDtoBuilder)? updates]) =>
+      (new GameDetailsDtoBuilder()..update(updates))._build();
+
+  _$GameDetailsDto._(
+      {required this.id,
+      required this.slug,
+      required this.name,
+      required this.nameOriginal,
+      required this.description,
+      this.metacritic,
+      required this.rating})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(id, 'GameDetailsDto', 'id');
+    BuiltValueNullFieldError.checkNotNull(slug, 'GameDetailsDto', 'slug');
+    BuiltValueNullFieldError.checkNotNull(name, 'GameDetailsDto', 'name');
+    BuiltValueNullFieldError.checkNotNull(
+        nameOriginal, 'GameDetailsDto', 'nameOriginal');
+    BuiltValueNullFieldError.checkNotNull(
+        description, 'GameDetailsDto', 'description');
+    BuiltValueNullFieldError.checkNotNull(rating, 'GameDetailsDto', 'rating');
+  }
+
+  @override
+  GameDetailsDto rebuild(void Function(GameDetailsDtoBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GameDetailsDtoBuilder toBuilder() =>
+      new GameDetailsDtoBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GameDetailsDto &&
+        id == other.id &&
+        slug == other.slug &&
+        name == other.name &&
+        nameOriginal == other.nameOriginal &&
+        description == other.description &&
+        metacritic == other.metacritic &&
+        rating == other.rating;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc(
+            $jc(
+                $jc($jc($jc($jc(0, id.hashCode), slug.hashCode), name.hashCode),
+                    nameOriginal.hashCode),
+                description.hashCode),
+            metacritic.hashCode),
+        rating.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('GameDetailsDto')
+          ..add('id', id)
+          ..add('slug', slug)
+          ..add('name', name)
+          ..add('nameOriginal', nameOriginal)
+          ..add('description', description)
+          ..add('metacritic', metacritic)
+          ..add('rating', rating))
+        .toString();
+  }
+}
+
+class GameDetailsDtoBuilder
+    implements Builder<GameDetailsDto, GameDetailsDtoBuilder> {
+  _$GameDetailsDto? _$v;
+
+  int? _id;
+  int? get id => _$this._id;
+  set id(int? id) => _$this._id = id;
+
+  String? _slug;
+  String? get slug => _$this._slug;
+  set slug(String? slug) => _$this._slug = slug;
+
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  String? _nameOriginal;
+  String? get nameOriginal => _$this._nameOriginal;
+  set nameOriginal(String? nameOriginal) => _$this._nameOriginal = nameOriginal;
+
+  String? _description;
+  String? get description => _$this._description;
+  set description(String? description) => _$this._description = description;
+
+  int? _metacritic;
+  int? get metacritic => _$this._metacritic;
+  set metacritic(int? metacritic) => _$this._metacritic = metacritic;
+
+  double? _rating;
+  double? get rating => _$this._rating;
+  set rating(double? rating) => _$this._rating = rating;
+
+  GameDetailsDtoBuilder();
+
+  GameDetailsDtoBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _id = $v.id;
+      _slug = $v.slug;
+      _name = $v.name;
+      _nameOriginal = $v.nameOriginal;
+      _description = $v.description;
+      _metacritic = $v.metacritic;
+      _rating = $v.rating;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GameDetailsDto other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GameDetailsDto;
+  }
+
+  @override
+  void update(void Function(GameDetailsDtoBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GameDetailsDto build() => _build();
+
+  _$GameDetailsDto _build() {
+    final _$result = _$v ??
+        new _$GameDetailsDto._(
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'GameDetailsDto', 'id'),
+            slug: BuiltValueNullFieldError.checkNotNull(
+                slug, 'GameDetailsDto', 'slug'),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, 'GameDetailsDto', 'name'),
+            nameOriginal: BuiltValueNullFieldError.checkNotNull(
+                nameOriginal, 'GameDetailsDto', 'nameOriginal'),
+            description: BuiltValueNullFieldError.checkNotNull(
+                description, 'GameDetailsDto', 'description'),
+            metacritic: metacritic,
+            rating: BuiltValueNullFieldError.checkNotNull(
+                rating, 'GameDetailsDto', 'rating'));
     replace(_$result);
     return _$result;
   }

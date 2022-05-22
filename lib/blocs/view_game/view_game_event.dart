@@ -13,8 +13,3 @@ class SelectGameToView extends ViewGameEvent {
   @override
   List<Object?> get props => [gameDto];
 }
-
-class RemoveGameToView extends ViewGameEvent {
-  @override
-  List<Object?> get props => [];
-}

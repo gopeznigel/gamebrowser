@@ -18,6 +18,10 @@ class GameRepository {
     return await _service.getGames(genreId: genreId);
   }
 
+  Future<GameDetailsDto?> getGameDetails(int gameId) async {
+    return await _service.getGameDetails(id: gameId);
+  }
+
   Future<GenresDto?> getGenres() async {
     return await _service.getGeneres();
   }

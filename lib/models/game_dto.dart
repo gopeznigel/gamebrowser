@@ -93,6 +93,32 @@ abstract class GameDto implements Built<GameDto, GameDtoBuilder> {
   BuiltList<GenreDto>? get tags;
 }
 
+abstract class GameDetailsDto
+    implements Built<GameDetailsDto, GameDetailsDtoBuilder> {
+  factory GameDetailsDto([Function(GameDetailsDtoBuilder) updates]) =
+      _$GameDetailsDto;
+
+  GameDetailsDto._();
+
+  static Serializer<GameDetailsDto> get serializer =>
+      _$gameDetailsDtoSerializer;
+
+  @BuiltValueField(wireName: 'id')
+  int get id;
+  @BuiltValueField(wireName: 'slug')
+  String get slug;
+  @BuiltValueField(wireName: 'name')
+  String get name;
+  @BuiltValueField(wireName: 'name_original')
+  String get nameOriginal;
+  @BuiltValueField(wireName: 'description')
+  String get description;
+  @BuiltValueField(wireName: 'metacritic')
+  int? get metacritic;
+  @BuiltValueField(wireName: 'rating')
+  double get rating;
+}
+
 abstract class GenreDto implements Built<GenreDto, GenreDtoBuilder> {
   factory GenreDto([Function(GenreDtoBuilder) updates]) = _$GenreDto;
 
