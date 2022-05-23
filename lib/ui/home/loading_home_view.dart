@@ -43,6 +43,27 @@ class LoadingHomeView extends StatelessWidget {
       ],
     );
 
+    final _rowGames = SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      physics: const NeverScrollableScrollPhysics(),
+      child: Padding(
+        padding: EdgeInsets.only(left: leftPadding, top: 30),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: List.generate(
+            10,
+            (int i) => const Padding(
+              padding: EdgeInsets.only(right: 30),
+              child: ShimmerContainer(
+                height: 200,
+                width: 200,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,6 +74,12 @@ class LoadingHomeView extends StatelessWidget {
         ),
         const SizedBox(height: 30),
         _carouselView,
+        const SizedBox(height: 50),
+        Padding(
+          padding: EdgeInsets.only(left: leftPadding),
+          child: const ShimmerContainer(width: 200, height: 40),
+        ),
+        _rowGames
       ],
     );
   }
