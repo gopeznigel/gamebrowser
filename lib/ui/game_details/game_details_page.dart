@@ -5,10 +5,12 @@ import 'package:game_browser_using_bloc/blocs/view_game/view_game_bloc.dart';
 import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
 import 'package:game_browser_using_bloc/ui/game_details/widgets/game_description_container.dart';
+import 'package:game_browser_using_bloc/ui/game_details/widgets/genre_container.dart';
 import 'package:game_browser_using_bloc/ui/home/widgets/frosted_container.dart';
 import 'package:game_browser_using_bloc/ui/widgets/game_rating.dart';
 import 'package:game_browser_using_bloc/utils/custom_number_formatter.dart';
-import 'package:shimmer/shimmer.dart';
+
+import 'widgets/screenshot_image.dart';
 
 class GameDetailsPage extends StatelessWidget {
   static const String route = '/gameDetailsPage';
@@ -45,7 +47,7 @@ class GameDetailsPage extends StatelessWidget {
 
           final _genres = Row(
             children: state.gameDetails!.genres!
-                .map((genre) => _genreContainer(genre.name!))
+                .map((genre) => GenreContainer(genre: genre.name!))
                 .toList(),
           );
 
@@ -63,6 +65,31 @@ class GameDetailsPage extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
+          );
+
+          final _screenshots = SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: state.gameDto!.screenshots!.map((ss) {
+                if (ss.id < 0) {
+                  return const SizedBox();
+                }
+
+                final double width = MediaQuery.of(context).size.width * 0.6;
+                final double height = width * (6 / 9);
+                bool isFirstScreenshot = (ss == state.gameDto!.screenshots![1]);
+
+                return Padding(
+                  padding: EdgeInsets.only(
+                      right: 20, left: !isFirstScreenshot ? 0 : 20),
+                  child: ScreenshotImage(
+                    width: width,
+                    height: height,
+                    imageUrl: ss.image,
+                  ),
+                );
+              }).toList(),
             ),
           );
 
@@ -127,54 +154,7 @@ class GameDetailsPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: state.gameDto!.screenshots!.map((ss) {
-                            if (ss.id < 0) {
-                              return const SizedBox();
-                            }
-
-                            final double width =
-                                MediaQuery.of(context).size.width * 0.6;
-                            final double height = width * (6 / 9);
-                            bool isFirstScreenshot =
-                                (ss == state.gameDto!.screenshots![1]);
-
-                            return Padding(
-                              padding: EdgeInsets.only(
-                                  right: 20, left: !isFirstScreenshot ? 0 : 20),
-                              child: SizedBox(
-                                width: width,
-                                height: height,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: ExtendedImage.network(
-                                    ss.image,
-                                    fit: BoxFit.cover,
-                                    loadStateChanged:
-                                        (ExtendedImageState state) {
-                                      switch (state.extendedImageLoadState) {
-                                        case LoadState.loading:
-                                          return Shimmer.fromColors(
-                                            baseColor: Colors.grey.shade300,
-                                            highlightColor:
-                                                Colors.grey.shade100,
-                                            child: Container(
-                                              color: Colors.white,
-                                            ),
-                                          );
-                                        default:
-                                          return null;
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      )
+                      _screenshots,
                     ],
                   ),
                 ),
@@ -187,23 +167,6 @@ class GameDetailsPage extends StatelessWidget {
           child: CircularProgressIndicator(),
         );
       }),
-    );
-  }
-
-  Widget _genreContainer(String genre) {
-    return Container(
-      padding: const EdgeInsets.all(5),
-      margin: const EdgeInsets.only(right: 12),
-      decoration: BoxDecoration(
-        color: AppColors.greenTag,
-        borderRadius: BorderRadius.circular(50),
-      ),
-      child: Text(
-        genre,
-        style: TextStyles.subTitle.copyWith(
-          color: AppColors.scaffoldBg,
-        ),
-      ),
     );
   }
 }
