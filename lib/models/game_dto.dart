@@ -39,7 +39,7 @@ abstract class GenresDto implements Built<GenresDto, GenresDtoBuilder> {
   @BuiltValueField(wireName: 'previous')
   String? get previous;
   @BuiltValueField(wireName: 'results')
-  BuiltList<GenreDto>? get results;
+  BuiltList<CommonDetailsDto>? get results;
 }
 
 abstract class GameDto implements Built<GameDto, GameDtoBuilder> {
@@ -82,11 +82,15 @@ abstract class GameDto implements Built<GameDto, GameDtoBuilder> {
   @BuiltValueField(wireName: 'reviews_count')
   int? get reviewsCount;
   @BuiltValueField(wireName: 'genres')
-  BuiltList<GenreDto>? get genres;
+  BuiltList<CommonDetailsDto>? get genres;
   @BuiltValueField(wireName: 'tags')
-  BuiltList<GenreDto>? get tags;
+  BuiltList<CommonDetailsDto>? get tags;
   @BuiltValueField(wireName: 'short_screenshots')
   BuiltList<ShortScreenshotDto>? get screenshots;
+  @BuiltValueField(wireName: 'platforms')
+  BuiltList<PlatformDto>? get platforms;
+  @BuiltValueField(wireName: 'esrb_rating')
+  CommonDetailsDto? get esrbRating;
 }
 
 abstract class ShortScreenshotDto
@@ -130,21 +134,39 @@ abstract class GameDetailsDto
   @BuiltValueField(wireName: 'rating')
   double get rating;
   @BuiltValueField(wireName: 'genres')
-  BuiltList<GenreDto>? get genres;
+  BuiltList<CommonDetailsDto>? get genres;
   @BuiltValueField(wireName: 'tags')
-  BuiltList<GenreDto>? get tags;
+  BuiltList<CommonDetailsDto>? get tags;
   @BuiltValueField(wireName: 'ratings_count')
   int? get ratingsCount;
   @BuiltValueField(wireName: 'background_image')
   String? get backgroundImage;
+  @BuiltValueField(wireName: 'publishers')
+  BuiltList<CommonDetailsDto>? get publishers;
+  @BuiltValueField(wireName: 'developers')
+  BuiltList<CommonDetailsDto>? get developers;
 }
 
-abstract class GenreDto implements Built<GenreDto, GenreDtoBuilder> {
-  factory GenreDto([Function(GenreDtoBuilder) updates]) = _$GenreDto;
+abstract class PlatformDto implements Built<PlatformDto, PlatformDtoBuilder> {
+  factory PlatformDto([Function(PlatformDtoBuilder) updates]) = _$PlatformDto;
 
-  GenreDto._();
+  PlatformDto._();
 
-  static Serializer<GenreDto> get serializer => _$genreDtoSerializer;
+  static Serializer<PlatformDto> get serializer => _$platformDtoSerializer;
+
+  @BuiltValueField(wireName: 'platform')
+  CommonDetailsDto? get platform;
+}
+
+abstract class CommonDetailsDto
+    implements Built<CommonDetailsDto, CommonDetailsDtoBuilder> {
+  factory CommonDetailsDto([Function(CommonDetailsDtoBuilder) updates]) =
+      _$CommonDetailsDto;
+
+  CommonDetailsDto._();
+
+  static Serializer<CommonDetailsDto> get serializer =>
+      _$commonDetailsDtoSerializer;
 
   @BuiltValueField(wireName: 'id')
   int? get id;
@@ -152,10 +174,4 @@ abstract class GenreDto implements Built<GenreDto, GenreDtoBuilder> {
   String? get name;
   @BuiltValueField(wireName: 'slug')
   String? get slug;
-  @BuiltValueField(wireName: 'language')
-  String? get language;
-  @BuiltValueField(wireName: 'games_count')
-  int? get gamesCount;
-  @BuiltValueField(wireName: 'image_background')
-  String? get imageBackground;
 }

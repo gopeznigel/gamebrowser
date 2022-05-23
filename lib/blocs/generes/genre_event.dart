@@ -11,7 +11,7 @@ class GetAllGenres extends GenreEvent {
 }
 
 class SelectGenre extends GenreEvent {
-  final GenreDto selectedGenre;
+  final CommonDetailsDto selectedGenre;
 
   SelectGenre({required this.selectedGenre});
 

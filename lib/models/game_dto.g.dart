@@ -13,7 +13,9 @@ Serializer<ShortScreenshotDto> _$shortScreenshotDtoSerializer =
     new _$ShortScreenshotDtoSerializer();
 Serializer<GameDetailsDto> _$gameDetailsDtoSerializer =
     new _$GameDetailsDtoSerializer();
-Serializer<GenreDto> _$genreDtoSerializer = new _$GenreDtoSerializer();
+Serializer<PlatformDto> _$platformDtoSerializer = new _$PlatformDtoSerializer();
+Serializer<CommonDetailsDto> _$commonDetailsDtoSerializer =
+    new _$CommonDetailsDtoSerializer();
 
 class _$GamesDtoSerializer implements StructuredSerializer<GamesDto> {
   @override
@@ -129,8 +131,8 @@ class _$GenresDtoSerializer implements StructuredSerializer<GenresDto> {
       result
         ..add('results')
         ..add(serializers.serialize(value,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(GenreDto)])));
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(CommonDetailsDto)])));
     }
     return result;
   }
@@ -161,7 +163,7 @@ class _$GenresDtoSerializer implements StructuredSerializer<GenresDto> {
         case 'results':
           result.results.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(GenreDto)]))!
+                      BuiltList, const [const FullType(CommonDetailsDto)]))!
               as BuiltList<Object?>);
           break;
       }
@@ -287,16 +289,16 @@ class _$GameDtoSerializer implements StructuredSerializer<GameDto> {
       result
         ..add('genres')
         ..add(serializers.serialize(value,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(GenreDto)])));
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(CommonDetailsDto)])));
     }
     value = object.tags;
     if (value != null) {
       result
         ..add('tags')
         ..add(serializers.serialize(value,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(GenreDto)])));
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(CommonDetailsDto)])));
     }
     value = object.screenshots;
     if (value != null) {
@@ -305,6 +307,21 @@ class _$GameDtoSerializer implements StructuredSerializer<GameDto> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(
                 BuiltList, const [const FullType(ShortScreenshotDto)])));
+    }
+    value = object.platforms;
+    if (value != null) {
+      result
+        ..add('platforms')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(PlatformDto)])));
+    }
+    value = object.esrbRating;
+    if (value != null) {
+      result
+        ..add('esrb_rating')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(CommonDetailsDto)));
     }
     return result;
   }
@@ -387,13 +404,13 @@ class _$GameDtoSerializer implements StructuredSerializer<GameDto> {
         case 'genres':
           result.genres.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(GenreDto)]))!
+                      BuiltList, const [const FullType(CommonDetailsDto)]))!
               as BuiltList<Object?>);
           break;
         case 'tags':
           result.tags.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(GenreDto)]))!
+                      BuiltList, const [const FullType(CommonDetailsDto)]))!
               as BuiltList<Object?>);
           break;
         case 'short_screenshots':
@@ -401,6 +418,17 @@ class _$GameDtoSerializer implements StructuredSerializer<GameDto> {
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ShortScreenshotDto)]))!
               as BuiltList<Object?>);
+          break;
+        case 'platforms':
+          result.platforms.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(PlatformDto)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'esrb_rating':
+          result.esrbRating.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(CommonDetailsDto))!
+              as CommonDetailsDto);
           break;
       }
     }
@@ -497,16 +525,16 @@ class _$GameDetailsDtoSerializer
       result
         ..add('genres')
         ..add(serializers.serialize(value,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(GenreDto)])));
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(CommonDetailsDto)])));
     }
     value = object.tags;
     if (value != null) {
       result
         ..add('tags')
         ..add(serializers.serialize(value,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(GenreDto)])));
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(CommonDetailsDto)])));
     }
     value = object.ratingsCount;
     if (value != null) {
@@ -520,6 +548,22 @@ class _$GameDetailsDtoSerializer
         ..add('background_image')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
+    }
+    value = object.publishers;
+    if (value != null) {
+      result
+        ..add('publishers')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(CommonDetailsDto)])));
+    }
+    value = object.developers;
+    if (value != null) {
+      result
+        ..add('developers')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(CommonDetailsDto)])));
     }
     return result;
   }
@@ -567,13 +611,13 @@ class _$GameDetailsDtoSerializer
         case 'genres':
           result.genres.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(GenreDto)]))!
+                      BuiltList, const [const FullType(CommonDetailsDto)]))!
               as BuiltList<Object?>);
           break;
         case 'tags':
           result.tags.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(GenreDto)]))!
+                      BuiltList, const [const FullType(CommonDetailsDto)]))!
               as BuiltList<Object?>);
           break;
         case 'ratings_count':
@@ -584,6 +628,18 @@ class _$GameDetailsDtoSerializer
           result.backgroundImage = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'publishers':
+          result.publishers.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(CommonDetailsDto)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'developers':
+          result.developers.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(CommonDetailsDto)]))!
+              as BuiltList<Object?>);
+          break;
       }
     }
 
@@ -591,14 +647,59 @@ class _$GameDetailsDtoSerializer
   }
 }
 
-class _$GenreDtoSerializer implements StructuredSerializer<GenreDto> {
+class _$PlatformDtoSerializer implements StructuredSerializer<PlatformDto> {
   @override
-  final Iterable<Type> types = const [GenreDto, _$GenreDto];
+  final Iterable<Type> types = const [PlatformDto, _$PlatformDto];
   @override
-  final String wireName = 'GenreDto';
+  final String wireName = 'PlatformDto';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, GenreDto object,
+  Iterable<Object?> serialize(Serializers serializers, PlatformDto object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[];
+    Object? value;
+    value = object.platform;
+    if (value != null) {
+      result
+        ..add('platform')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(CommonDetailsDto)));
+    }
+    return result;
+  }
+
+  @override
+  PlatformDto deserialize(Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new PlatformDtoBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'platform':
+          result.platform.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(CommonDetailsDto))!
+              as CommonDetailsDto);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$CommonDetailsDtoSerializer
+    implements StructuredSerializer<CommonDetailsDto> {
+  @override
+  final Iterable<Type> types = const [CommonDetailsDto, _$CommonDetailsDto];
+  @override
+  final String wireName = 'CommonDetailsDto';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, CommonDetailsDto object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[];
     Object? value;
@@ -622,33 +723,14 @@ class _$GenreDtoSerializer implements StructuredSerializer<GenreDto> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.language;
-    if (value != null) {
-      result
-        ..add('language')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.gamesCount;
-    if (value != null) {
-      result
-        ..add('games_count')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
-    value = object.imageBackground;
-    if (value != null) {
-      result
-        ..add('image_background')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     return result;
   }
 
   @override
-  GenreDto deserialize(Serializers serializers, Iterable<Object?> serialized,
+  CommonDetailsDto deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new GenreDtoBuilder();
+    final result = new CommonDetailsDtoBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -666,18 +748,6 @@ class _$GenreDtoSerializer implements StructuredSerializer<GenreDto> {
           break;
         case 'slug':
           result.slug = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'language':
-          result.language = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'games_count':
-          result.gamesCount = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
-        case 'image_background':
-          result.imageBackground = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
       }
@@ -819,7 +889,7 @@ class _$GenresDto extends GenresDto {
   @override
   final String? previous;
   @override
-  final BuiltList<GenreDto>? results;
+  final BuiltList<CommonDetailsDto>? results;
 
   factory _$GenresDto([void Function(GenresDtoBuilder)? updates]) =>
       (new GenresDtoBuilder()..update(updates))._build();
@@ -877,10 +947,11 @@ class GenresDtoBuilder implements Builder<GenresDto, GenresDtoBuilder> {
   String? get previous => _$this._previous;
   set previous(String? previous) => _$this._previous = previous;
 
-  ListBuilder<GenreDto>? _results;
-  ListBuilder<GenreDto> get results =>
-      _$this._results ??= new ListBuilder<GenreDto>();
-  set results(ListBuilder<GenreDto>? results) => _$this._results = results;
+  ListBuilder<CommonDetailsDto>? _results;
+  ListBuilder<CommonDetailsDto> get results =>
+      _$this._results ??= new ListBuilder<CommonDetailsDto>();
+  set results(ListBuilder<CommonDetailsDto>? results) =>
+      _$this._results = results;
 
   GenresDtoBuilder();
 
@@ -969,11 +1040,15 @@ class _$GameDto extends GameDto {
   @override
   final int? reviewsCount;
   @override
-  final BuiltList<GenreDto>? genres;
+  final BuiltList<CommonDetailsDto>? genres;
   @override
-  final BuiltList<GenreDto>? tags;
+  final BuiltList<CommonDetailsDto>? tags;
   @override
   final BuiltList<ShortScreenshotDto>? screenshots;
+  @override
+  final BuiltList<PlatformDto>? platforms;
+  @override
+  final CommonDetailsDto? esrbRating;
 
   factory _$GameDto([void Function(GameDtoBuilder)? updates]) =>
       (new GameDtoBuilder()..update(updates))._build();
@@ -997,7 +1072,9 @@ class _$GameDto extends GameDto {
       this.reviewsCount,
       this.genres,
       this.tags,
-      this.screenshots})
+      this.screenshots,
+      this.platforms,
+      this.esrbRating})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, 'GameDto', 'id');
   }
@@ -1031,7 +1108,9 @@ class _$GameDto extends GameDto {
         reviewsCount == other.reviewsCount &&
         genres == other.genres &&
         tags == other.tags &&
-        screenshots == other.screenshots;
+        screenshots == other.screenshots &&
+        platforms == other.platforms &&
+        esrbRating == other.esrbRating;
   }
 
   @override
@@ -1054,32 +1133,26 @@ class _$GameDto extends GameDto {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                0,
-                                                                                id
-                                                                                    .hashCode),
-                                                                            slug
-                                                                                .hashCode),
-                                                                        name
-                                                                            .hashCode),
-                                                                    released
-                                                                        .hashCode),
-                                                                tba.hashCode),
-                                                            backgroundImage
-                                                                .hashCode),
-                                                        rating.hashCode),
-                                                    ratingTop.hashCode),
-                                                ratingsCount.hashCode),
-                                            reviewsTextCount.hashCode),
-                                        added.hashCode),
-                                    metacritic.hashCode),
-                                playtime.hashCode),
-                            suggestionsCount.hashCode),
-                        updated.hashCode),
-                    reviewsCount.hashCode),
-                genres.hashCode),
-            tags.hashCode),
-        screenshots.hashCode));
+                                                                            $jc($jc($jc(0, id.hashCode), slug.hashCode),
+                                                                                name.hashCode),
+                                                                            released.hashCode),
+                                                                        tba.hashCode),
+                                                                    backgroundImage.hashCode),
+                                                                rating.hashCode),
+                                                            ratingTop.hashCode),
+                                                        ratingsCount.hashCode),
+                                                    reviewsTextCount.hashCode),
+                                                added.hashCode),
+                                            metacritic.hashCode),
+                                        playtime.hashCode),
+                                    suggestionsCount.hashCode),
+                                updated.hashCode),
+                            reviewsCount.hashCode),
+                        genres.hashCode),
+                    tags.hashCode),
+                screenshots.hashCode),
+            platforms.hashCode),
+        esrbRating.hashCode));
   }
 
   @override
@@ -1103,7 +1176,9 @@ class _$GameDto extends GameDto {
           ..add('reviewsCount', reviewsCount)
           ..add('genres', genres)
           ..add('tags', tags)
-          ..add('screenshots', screenshots))
+          ..add('screenshots', screenshots)
+          ..add('platforms', platforms)
+          ..add('esrbRating', esrbRating))
         .toString();
   }
 }
@@ -1178,21 +1253,33 @@ class GameDtoBuilder implements Builder<GameDto, GameDtoBuilder> {
   int? get reviewsCount => _$this._reviewsCount;
   set reviewsCount(int? reviewsCount) => _$this._reviewsCount = reviewsCount;
 
-  ListBuilder<GenreDto>? _genres;
-  ListBuilder<GenreDto> get genres =>
-      _$this._genres ??= new ListBuilder<GenreDto>();
-  set genres(ListBuilder<GenreDto>? genres) => _$this._genres = genres;
+  ListBuilder<CommonDetailsDto>? _genres;
+  ListBuilder<CommonDetailsDto> get genres =>
+      _$this._genres ??= new ListBuilder<CommonDetailsDto>();
+  set genres(ListBuilder<CommonDetailsDto>? genres) => _$this._genres = genres;
 
-  ListBuilder<GenreDto>? _tags;
-  ListBuilder<GenreDto> get tags =>
-      _$this._tags ??= new ListBuilder<GenreDto>();
-  set tags(ListBuilder<GenreDto>? tags) => _$this._tags = tags;
+  ListBuilder<CommonDetailsDto>? _tags;
+  ListBuilder<CommonDetailsDto> get tags =>
+      _$this._tags ??= new ListBuilder<CommonDetailsDto>();
+  set tags(ListBuilder<CommonDetailsDto>? tags) => _$this._tags = tags;
 
   ListBuilder<ShortScreenshotDto>? _screenshots;
   ListBuilder<ShortScreenshotDto> get screenshots =>
       _$this._screenshots ??= new ListBuilder<ShortScreenshotDto>();
   set screenshots(ListBuilder<ShortScreenshotDto>? screenshots) =>
       _$this._screenshots = screenshots;
+
+  ListBuilder<PlatformDto>? _platforms;
+  ListBuilder<PlatformDto> get platforms =>
+      _$this._platforms ??= new ListBuilder<PlatformDto>();
+  set platforms(ListBuilder<PlatformDto>? platforms) =>
+      _$this._platforms = platforms;
+
+  CommonDetailsDtoBuilder? _esrbRating;
+  CommonDetailsDtoBuilder get esrbRating =>
+      _$this._esrbRating ??= new CommonDetailsDtoBuilder();
+  set esrbRating(CommonDetailsDtoBuilder? esrbRating) =>
+      _$this._esrbRating = esrbRating;
 
   GameDtoBuilder();
 
@@ -1218,6 +1305,8 @@ class GameDtoBuilder implements Builder<GameDto, GameDtoBuilder> {
       _genres = $v.genres?.toBuilder();
       _tags = $v.tags?.toBuilder();
       _screenshots = $v.screenshots?.toBuilder();
+      _platforms = $v.platforms?.toBuilder();
+      _esrbRating = $v.esrbRating?.toBuilder();
       _$v = null;
     }
     return this;
@@ -1260,7 +1349,9 @@ class GameDtoBuilder implements Builder<GameDto, GameDtoBuilder> {
               reviewsCount: reviewsCount,
               genres: _genres?.build(),
               tags: _tags?.build(),
-              screenshots: _screenshots?.build());
+              screenshots: _screenshots?.build(),
+              platforms: _platforms?.build(),
+              esrbRating: _esrbRating?.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -1270,6 +1361,10 @@ class GameDtoBuilder implements Builder<GameDto, GameDtoBuilder> {
         _tags?.build();
         _$failedField = 'screenshots';
         _screenshots?.build();
+        _$failedField = 'platforms';
+        _platforms?.build();
+        _$failedField = 'esrbRating';
+        _esrbRating?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'GameDto', _$failedField, e.toString());
@@ -1393,13 +1488,17 @@ class _$GameDetailsDto extends GameDetailsDto {
   @override
   final double rating;
   @override
-  final BuiltList<GenreDto>? genres;
+  final BuiltList<CommonDetailsDto>? genres;
   @override
-  final BuiltList<GenreDto>? tags;
+  final BuiltList<CommonDetailsDto>? tags;
   @override
   final int? ratingsCount;
   @override
   final String? backgroundImage;
+  @override
+  final BuiltList<CommonDetailsDto>? publishers;
+  @override
+  final BuiltList<CommonDetailsDto>? developers;
 
   factory _$GameDetailsDto([void Function(GameDetailsDtoBuilder)? updates]) =>
       (new GameDetailsDtoBuilder()..update(updates))._build();
@@ -1415,7 +1514,9 @@ class _$GameDetailsDto extends GameDetailsDto {
       this.genres,
       this.tags,
       this.ratingsCount,
-      this.backgroundImage})
+      this.backgroundImage,
+      this.publishers,
+      this.developers})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, 'GameDetailsDto', 'id');
     BuiltValueNullFieldError.checkNotNull(slug, 'GameDetailsDto', 'slug');
@@ -1449,7 +1550,9 @@ class _$GameDetailsDto extends GameDetailsDto {
         genres == other.genres &&
         tags == other.tags &&
         ratingsCount == other.ratingsCount &&
-        backgroundImage == other.backgroundImage;
+        backgroundImage == other.backgroundImage &&
+        publishers == other.publishers &&
+        developers == other.developers;
   }
 
   @override
@@ -1462,16 +1565,22 @@ class _$GameDetailsDto extends GameDetailsDto {
                         $jc(
                             $jc(
                                 $jc(
-                                    $jc($jc($jc(0, id.hashCode), slug.hashCode),
-                                        name.hashCode),
-                                    nameOriginal.hashCode),
-                                description.hashCode),
-                            metacritic.hashCode),
-                        rating.hashCode),
-                    genres.hashCode),
-                tags.hashCode),
-            ratingsCount.hashCode),
-        backgroundImage.hashCode));
+                                    $jc(
+                                        $jc(
+                                            $jc(
+                                                $jc($jc(0, id.hashCode),
+                                                    slug.hashCode),
+                                                name.hashCode),
+                                            nameOriginal.hashCode),
+                                        description.hashCode),
+                                    metacritic.hashCode),
+                                rating.hashCode),
+                            genres.hashCode),
+                        tags.hashCode),
+                    ratingsCount.hashCode),
+                backgroundImage.hashCode),
+            publishers.hashCode),
+        developers.hashCode));
   }
 
   @override
@@ -1487,7 +1596,9 @@ class _$GameDetailsDto extends GameDetailsDto {
           ..add('genres', genres)
           ..add('tags', tags)
           ..add('ratingsCount', ratingsCount)
-          ..add('backgroundImage', backgroundImage))
+          ..add('backgroundImage', backgroundImage)
+          ..add('publishers', publishers)
+          ..add('developers', developers))
         .toString();
   }
 }
@@ -1524,15 +1635,15 @@ class GameDetailsDtoBuilder
   double? get rating => _$this._rating;
   set rating(double? rating) => _$this._rating = rating;
 
-  ListBuilder<GenreDto>? _genres;
-  ListBuilder<GenreDto> get genres =>
-      _$this._genres ??= new ListBuilder<GenreDto>();
-  set genres(ListBuilder<GenreDto>? genres) => _$this._genres = genres;
+  ListBuilder<CommonDetailsDto>? _genres;
+  ListBuilder<CommonDetailsDto> get genres =>
+      _$this._genres ??= new ListBuilder<CommonDetailsDto>();
+  set genres(ListBuilder<CommonDetailsDto>? genres) => _$this._genres = genres;
 
-  ListBuilder<GenreDto>? _tags;
-  ListBuilder<GenreDto> get tags =>
-      _$this._tags ??= new ListBuilder<GenreDto>();
-  set tags(ListBuilder<GenreDto>? tags) => _$this._tags = tags;
+  ListBuilder<CommonDetailsDto>? _tags;
+  ListBuilder<CommonDetailsDto> get tags =>
+      _$this._tags ??= new ListBuilder<CommonDetailsDto>();
+  set tags(ListBuilder<CommonDetailsDto>? tags) => _$this._tags = tags;
 
   int? _ratingsCount;
   int? get ratingsCount => _$this._ratingsCount;
@@ -1542,6 +1653,18 @@ class GameDetailsDtoBuilder
   String? get backgroundImage => _$this._backgroundImage;
   set backgroundImage(String? backgroundImage) =>
       _$this._backgroundImage = backgroundImage;
+
+  ListBuilder<CommonDetailsDto>? _publishers;
+  ListBuilder<CommonDetailsDto> get publishers =>
+      _$this._publishers ??= new ListBuilder<CommonDetailsDto>();
+  set publishers(ListBuilder<CommonDetailsDto>? publishers) =>
+      _$this._publishers = publishers;
+
+  ListBuilder<CommonDetailsDto>? _developers;
+  ListBuilder<CommonDetailsDto> get developers =>
+      _$this._developers ??= new ListBuilder<CommonDetailsDto>();
+  set developers(ListBuilder<CommonDetailsDto>? developers) =>
+      _$this._developers = developers;
 
   GameDetailsDtoBuilder();
 
@@ -1559,6 +1682,8 @@ class GameDetailsDtoBuilder
       _tags = $v.tags?.toBuilder();
       _ratingsCount = $v.ratingsCount;
       _backgroundImage = $v.backgroundImage;
+      _publishers = $v.publishers?.toBuilder();
+      _developers = $v.developers?.toBuilder();
       _$v = null;
     }
     return this;
@@ -1599,7 +1724,9 @@ class GameDetailsDtoBuilder
               genres: _genres?.build(),
               tags: _tags?.build(),
               ratingsCount: ratingsCount,
-              backgroundImage: backgroundImage);
+              backgroundImage: backgroundImage,
+              publishers: _publishers?.build(),
+              developers: _developers?.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -1607,6 +1734,11 @@ class GameDetailsDtoBuilder
         _genres?.build();
         _$failedField = 'tags';
         _tags?.build();
+
+        _$failedField = 'publishers';
+        _publishers?.build();
+        _$failedField = 'developers';
+        _developers?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'GameDetailsDto', _$failedField, e.toString());
@@ -1618,76 +1750,144 @@ class GameDetailsDtoBuilder
   }
 }
 
-class _$GenreDto extends GenreDto {
+class _$PlatformDto extends PlatformDto {
+  @override
+  final CommonDetailsDto? platform;
+
+  factory _$PlatformDto([void Function(PlatformDtoBuilder)? updates]) =>
+      (new PlatformDtoBuilder()..update(updates))._build();
+
+  _$PlatformDto._({this.platform}) : super._();
+
+  @override
+  PlatformDto rebuild(void Function(PlatformDtoBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  PlatformDtoBuilder toBuilder() => new PlatformDtoBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is PlatformDto && platform == other.platform;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(0, platform.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('PlatformDto')
+          ..add('platform', platform))
+        .toString();
+  }
+}
+
+class PlatformDtoBuilder implements Builder<PlatformDto, PlatformDtoBuilder> {
+  _$PlatformDto? _$v;
+
+  CommonDetailsDtoBuilder? _platform;
+  CommonDetailsDtoBuilder get platform =>
+      _$this._platform ??= new CommonDetailsDtoBuilder();
+  set platform(CommonDetailsDtoBuilder? platform) =>
+      _$this._platform = platform;
+
+  PlatformDtoBuilder();
+
+  PlatformDtoBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _platform = $v.platform?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(PlatformDto other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$PlatformDto;
+  }
+
+  @override
+  void update(void Function(PlatformDtoBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  PlatformDto build() => _build();
+
+  _$PlatformDto _build() {
+    _$PlatformDto _$result;
+    try {
+      _$result = _$v ?? new _$PlatformDto._(platform: _platform?.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'platform';
+        _platform?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'PlatformDto', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$CommonDetailsDto extends CommonDetailsDto {
   @override
   final int? id;
   @override
   final String? name;
   @override
   final String? slug;
-  @override
-  final String? language;
-  @override
-  final int? gamesCount;
-  @override
-  final String? imageBackground;
 
-  factory _$GenreDto([void Function(GenreDtoBuilder)? updates]) =>
-      (new GenreDtoBuilder()..update(updates))._build();
+  factory _$CommonDetailsDto(
+          [void Function(CommonDetailsDtoBuilder)? updates]) =>
+      (new CommonDetailsDtoBuilder()..update(updates))._build();
 
-  _$GenreDto._(
-      {this.id,
-      this.name,
-      this.slug,
-      this.language,
-      this.gamesCount,
-      this.imageBackground})
-      : super._();
+  _$CommonDetailsDto._({this.id, this.name, this.slug}) : super._();
 
   @override
-  GenreDto rebuild(void Function(GenreDtoBuilder) updates) =>
+  CommonDetailsDto rebuild(void Function(CommonDetailsDtoBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  GenreDtoBuilder toBuilder() => new GenreDtoBuilder()..replace(this);
+  CommonDetailsDtoBuilder toBuilder() =>
+      new CommonDetailsDtoBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is GenreDto &&
+    return other is CommonDetailsDto &&
         id == other.id &&
         name == other.name &&
-        slug == other.slug &&
-        language == other.language &&
-        gamesCount == other.gamesCount &&
-        imageBackground == other.imageBackground;
+        slug == other.slug;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc($jc($jc($jc(0, id.hashCode), name.hashCode), slug.hashCode),
-                language.hashCode),
-            gamesCount.hashCode),
-        imageBackground.hashCode));
+    return $jf($jc($jc($jc(0, id.hashCode), name.hashCode), slug.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('GenreDto')
+    return (newBuiltValueToStringHelper('CommonDetailsDto')
           ..add('id', id)
           ..add('name', name)
-          ..add('slug', slug)
-          ..add('language', language)
-          ..add('gamesCount', gamesCount)
-          ..add('imageBackground', imageBackground))
+          ..add('slug', slug))
         .toString();
   }
 }
 
-class GenreDtoBuilder implements Builder<GenreDto, GenreDtoBuilder> {
-  _$GenreDto? _$v;
+class CommonDetailsDtoBuilder
+    implements Builder<CommonDetailsDto, CommonDetailsDtoBuilder> {
+  _$CommonDetailsDto? _$v;
 
   int? _id;
   int? get id => _$this._id;
@@ -1701,58 +1901,36 @@ class GenreDtoBuilder implements Builder<GenreDto, GenreDtoBuilder> {
   String? get slug => _$this._slug;
   set slug(String? slug) => _$this._slug = slug;
 
-  String? _language;
-  String? get language => _$this._language;
-  set language(String? language) => _$this._language = language;
+  CommonDetailsDtoBuilder();
 
-  int? _gamesCount;
-  int? get gamesCount => _$this._gamesCount;
-  set gamesCount(int? gamesCount) => _$this._gamesCount = gamesCount;
-
-  String? _imageBackground;
-  String? get imageBackground => _$this._imageBackground;
-  set imageBackground(String? imageBackground) =>
-      _$this._imageBackground = imageBackground;
-
-  GenreDtoBuilder();
-
-  GenreDtoBuilder get _$this {
+  CommonDetailsDtoBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _id = $v.id;
       _name = $v.name;
       _slug = $v.slug;
-      _language = $v.language;
-      _gamesCount = $v.gamesCount;
-      _imageBackground = $v.imageBackground;
       _$v = null;
     }
     return this;
   }
 
   @override
-  void replace(GenreDto other) {
+  void replace(CommonDetailsDto other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$GenreDto;
+    _$v = other as _$CommonDetailsDto;
   }
 
   @override
-  void update(void Function(GenreDtoBuilder)? updates) {
+  void update(void Function(CommonDetailsDtoBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  GenreDto build() => _build();
+  CommonDetailsDto build() => _build();
 
-  _$GenreDto _build() {
-    final _$result = _$v ??
-        new _$GenreDto._(
-            id: id,
-            name: name,
-            slug: slug,
-            language: language,
-            gamesCount: gamesCount,
-            imageBackground: imageBackground);
+  _$CommonDetailsDto _build() {
+    final _$result =
+        _$v ?? new _$CommonDetailsDto._(id: id, name: name, slug: slug);
     replace(_$result);
     return _$result;
   }

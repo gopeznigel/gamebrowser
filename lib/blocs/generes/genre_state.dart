@@ -11,7 +11,7 @@ extension GenreStatusX on GenreStatus {
 
 class GenreState extends Equatable {
   final GenresDto? genres;
-  final GenreDto? selectedGenre;
+  final CommonDetailsDto? selectedGenre;
   final GenreStatus status;
 
   const GenreState({
@@ -24,7 +24,9 @@ class GenreState extends Equatable {
   List<Object?> get props => [genres, selectedGenre, status];
 
   GenreState copyWith(
-      {GenresDto? genres, GenreDto? selectedGenre, GenreStatus? status}) {
+      {GenresDto? genres,
+      CommonDetailsDto? selectedGenre,
+      GenreStatus? status}) {
     return GenreState(
       genres: genres ?? this.genres,
       selectedGenre: selectedGenre ?? this.selectedGenre,

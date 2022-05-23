@@ -2,14 +2,17 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_browser_using_bloc/blocs/view_game/view_game_bloc.dart';
+import 'package:game_browser_using_bloc/models/game_dto.dart';
 import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
 import 'package:game_browser_using_bloc/ui/game_details/details_loading_view.dart';
+import 'package:game_browser_using_bloc/ui/game_details/widgets/common_details_container.dart';
 import 'package:game_browser_using_bloc/ui/game_details/widgets/game_description_container.dart';
 import 'package:game_browser_using_bloc/ui/game_details/widgets/genre_container.dart';
 import 'package:game_browser_using_bloc/ui/home/widgets/frosted_container.dart';
 import 'package:game_browser_using_bloc/ui/widgets/game_rating.dart';
 import 'package:game_browser_using_bloc/utils/custom_number_formatter.dart';
+import 'package:intl/intl.dart';
 
 import 'widgets/screenshot_image.dart';
 
@@ -23,6 +26,7 @@ class GameDetailsPage extends StatelessWidget {
     return BlocBuilder<ViewGameBloc, ViewGameState>(
       builder: ((BuildContext context, ViewGameState state) {
         const _minSpace = SizedBox(height: 5, width: 10);
+        const _maxSpace = SizedBox(height: 15, width: 15);
 
         final _backButton = Container(
           margin: const EdgeInsets.all(10),
@@ -94,6 +98,7 @@ class GameDetailsPage extends StatelessWidget {
 
         final _descriptionBody = SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.all(20),
@@ -127,6 +132,65 @@ class GameDetailsPage extends StatelessWidget {
                 ),
               ),
               _screenshots,
+              state.status.isLoaded
+                  ? Padding(
+                      padding: EdgeInsets.only(
+                          top: 20,
+                          bottom: 20,
+                          left: 20,
+                          right: MediaQuery.of(context).size.width * 0.2),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CommonDetailsContainer(
+                            title: 'Platforms',
+                            details: state.gameDto!.platforms!
+                                .map((p) => p.platform!)
+                                .toList(),
+                          ),
+                          _maxSpace,
+                          CommonDetailsContainer(
+                            title: 'Metscore',
+                            details: [
+                              CommonDetailsDto().rebuild((d) =>
+                                  d.name = state.gameDto!.metacritic.toString())
+                            ],
+                          ),
+                          _maxSpace,
+                          CommonDetailsContainer(
+                            title: 'Developer',
+                            details: state.gameDetails!.developers!.asList(),
+                          ),
+                          _maxSpace,
+                          CommonDetailsContainer(
+                            title: 'Publisher',
+                            details: state.gameDetails!.publishers!.asList(),
+                          ),
+                          _maxSpace,
+                          CommonDetailsContainer(
+                            title: 'Tags',
+                            details: state.gameDetails!.tags!.asList(),
+                          ),
+                          _maxSpace,
+                          CommonDetailsContainer(
+                            title: 'Released Date',
+                            details: [
+                              CommonDetailsDto().rebuild((d) => d.name =
+                                  DateFormat('MMM dd, yyyy').format(
+                                      DateFormat('yyyy-MM-dd')
+                                          .parse(state.gameDto!.released!)))
+                            ],
+                          ),
+                          _maxSpace,
+                          CommonDetailsContainer(
+                            title: 'Age Rating',
+                            details: [state.gameDto!.esrbRating!],
+                          ),
+                        ],
+                      ),
+                    )
+                  : const SizedBox(),
             ],
           ),
         );
