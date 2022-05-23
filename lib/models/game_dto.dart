@@ -174,4 +174,6 @@ abstract class CommonDetailsDto
   String? get name;
   @BuiltValueField(wireName: 'slug')
   String? get slug;
+  @BuiltValueField(wireName: 'image_background')
+  String? get imageBackground;
 }

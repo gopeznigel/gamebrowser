@@ -723,6 +723,13 @@ class _$CommonDetailsDtoSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.imageBackground;
+    if (value != null) {
+      result
+        ..add('image_background')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -748,6 +755,10 @@ class _$CommonDetailsDtoSerializer
           break;
         case 'slug':
           result.slug = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'image_background':
+          result.imageBackground = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
       }
@@ -1846,12 +1857,15 @@ class _$CommonDetailsDto extends CommonDetailsDto {
   final String? name;
   @override
   final String? slug;
+  @override
+  final String? imageBackground;
 
   factory _$CommonDetailsDto(
           [void Function(CommonDetailsDtoBuilder)? updates]) =>
       (new CommonDetailsDtoBuilder()..update(updates))._build();
 
-  _$CommonDetailsDto._({this.id, this.name, this.slug}) : super._();
+  _$CommonDetailsDto._({this.id, this.name, this.slug, this.imageBackground})
+      : super._();
 
   @override
   CommonDetailsDto rebuild(void Function(CommonDetailsDtoBuilder) updates) =>
@@ -1867,12 +1881,14 @@ class _$CommonDetailsDto extends CommonDetailsDto {
     return other is CommonDetailsDto &&
         id == other.id &&
         name == other.name &&
-        slug == other.slug;
+        slug == other.slug &&
+        imageBackground == other.imageBackground;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, id.hashCode), name.hashCode), slug.hashCode));
+    return $jf($jc($jc($jc($jc(0, id.hashCode), name.hashCode), slug.hashCode),
+        imageBackground.hashCode));
   }
 
   @override
@@ -1880,7 +1896,8 @@ class _$CommonDetailsDto extends CommonDetailsDto {
     return (newBuiltValueToStringHelper('CommonDetailsDto')
           ..add('id', id)
           ..add('name', name)
-          ..add('slug', slug))
+          ..add('slug', slug)
+          ..add('imageBackground', imageBackground))
         .toString();
   }
 }
@@ -1901,6 +1918,11 @@ class CommonDetailsDtoBuilder
   String? get slug => _$this._slug;
   set slug(String? slug) => _$this._slug = slug;
 
+  String? _imageBackground;
+  String? get imageBackground => _$this._imageBackground;
+  set imageBackground(String? imageBackground) =>
+      _$this._imageBackground = imageBackground;
+
   CommonDetailsDtoBuilder();
 
   CommonDetailsDtoBuilder get _$this {
@@ -1909,6 +1931,7 @@ class CommonDetailsDtoBuilder
       _id = $v.id;
       _name = $v.name;
       _slug = $v.slug;
+      _imageBackground = $v.imageBackground;
       _$v = null;
     }
     return this;
@@ -1929,8 +1952,9 @@ class CommonDetailsDtoBuilder
   CommonDetailsDto build() => _build();
 
   _$CommonDetailsDto _build() {
-    final _$result =
-        _$v ?? new _$CommonDetailsDto._(id: id, name: name, slug: slug);
+    final _$result = _$v ??
+        new _$CommonDetailsDto._(
+            id: id, name: name, slug: slug, imageBackground: imageBackground);
     replace(_$result);
     return _$result;
   }
