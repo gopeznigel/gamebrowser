@@ -13,22 +13,25 @@ class ViewGameBloc extends Bloc<ViewGameEvent, ViewGameState> {
     required this.repository,
   }) : super(const ViewGameState()) {
     on<SelectGameToView>(_handleSelectGameToView);
+    on<RemoveGameView>(_handleRemoveGameView);
   }
 
   void _handleSelectGameToView(
       SelectGameToView event, Emitter<ViewGameState> emit) async {
     try {
       emit(state.copyWith(
-          status: GameDetialsStatus.loading,
-          gameDto: event.gameDto,
-          gameDetails: null));
+          status: GameDetialsStatus.loading, gameDto: event.gameDto));
 
       final gameDetails = await repository.getGameDetails(event.gameDto.id);
 
       emit(state.copyWith(
           gameDetails: gameDetails!, status: GameDetialsStatus.loaded));
     } catch (e) {
-      emit(state.copyWith(gameDetails: null, status: GameDetialsStatus.error));
+      emit(state.copyWith(status: GameDetialsStatus.error));
     }
   }
+
+  void _handleRemoveGameView(
+          RemoveGameView event, Emitter<ViewGameState> emit) =>
+      emit(state.copyWith(status: GameDetialsStatus.initial));
 }

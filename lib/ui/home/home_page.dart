@@ -20,7 +20,15 @@ class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<NewGameBloc, NewGameState>(
+  Widget build(BuildContext context) {
+    return BlocListener<ViewGameBloc, ViewGameState>(
+      listener: (context, state) {
+        if (state.status.isLoading) {
+          Navigator.pushNamed(context, GameDetailsPage.route).then(
+              (value) => context.read<ViewGameBloc>().add(RemoveGameView()));
+        }
+      },
+      child: BlocBuilder<NewGameBloc, NewGameState>(
         builder: (context, newGameState) {
           return BlocBuilder<GameBloc, GameState>(
             builder: (BuildContext context, GameState allGameState) {
@@ -50,7 +58,9 @@ class HomePage extends StatelessWidget {
             },
           );
         },
-      );
+      ),
+    );
+  }
 
   Widget _home(
       BuildContext context, GameState allGameState, NewGameState newGameState) {
@@ -128,8 +138,6 @@ class HomePage extends StatelessWidget {
                   onTap: () {
                     context.read<ViewGameBloc>().add(SelectGameToView(
                         gameDto: newGameState.games!.results![i]));
-
-                    Navigator.pushNamed(context, GameDetailsPage.route);
                   },
                 ),
               ),
@@ -159,8 +167,6 @@ class HomePage extends StatelessWidget {
                 onTap: () {
                   context.read<ViewGameBloc>().add(SelectGameToView(
                       gameDto: allGameState.games!.results![i]));
-
-                  Navigator.pushNamed(context, GameDetailsPage.route);
                 },
               ),
             ),
