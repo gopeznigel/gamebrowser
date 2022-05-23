@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ng.game_browser_using_bloc">
+
+   <uses-permission android:name="android.permission.INTERNET"/>
+
    <application
         android:label="game_browser_using_bloc"
         android:name="${applicationName}"

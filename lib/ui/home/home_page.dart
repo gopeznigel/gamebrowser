@@ -7,6 +7,8 @@ import 'package:game_browser_using_bloc/blocs/view_game/view_game_bloc.dart';
 import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
 import 'package:game_browser_using_bloc/ui/game_details/game_details_page.dart';
+import 'package:game_browser_using_bloc/ui/game_lists/all_game_list_page.dart';
+import 'package:game_browser_using_bloc/ui/game_lists/new_game_list_page.dart';
 import 'package:game_browser_using_bloc/ui/home/loading_home_view.dart';
 import 'package:game_browser_using_bloc/ui/home/widgets/game_collection_tile.dart';
 import 'package:game_browser_using_bloc/ui/home/widgets/go_button.dart';
@@ -82,6 +84,8 @@ class HomePage extends StatelessWidget {
           GoButton(
             onTap: () {
               debugPrint('Go to new release games page');
+
+              Navigator.pushNamed(context, NewGameListPage.route);
             },
           ),
         ],
@@ -104,6 +108,8 @@ class HomePage extends StatelessWidget {
           GoButton(
             onTap: () {
               debugPrint('Go to all games page');
+
+              Navigator.pushNamed(context, AllGameListPage.route);
             },
           ),
         ],
@@ -158,6 +164,7 @@ class HomePage extends StatelessWidget {
             (int i) => Padding(
               padding: const EdgeInsets.only(right: 30),
               child: GameCollectionTile(
+                key: UniqueKey(),
                 size: 200,
                 imageUrl: allGameState.games!.results![i].backgroundImage!,
                 name: allGameState.games!.results![i].name!,

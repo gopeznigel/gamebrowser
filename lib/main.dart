@@ -7,6 +7,8 @@ import 'package:game_browser_using_bloc/blocs/view_game/view_game_bloc.dart';
 import 'package:game_browser_using_bloc/repositories/game_repository.dart';
 import 'package:game_browser_using_bloc/services/game_service.dart';
 import 'package:game_browser_using_bloc/ui/game_details/game_details_page.dart';
+import 'package:game_browser_using_bloc/ui/game_lists/all_game_list_page.dart';
+import 'package:game_browser_using_bloc/ui/game_lists/new_game_list_page.dart';
 import 'package:game_browser_using_bloc/ui/home/home_page.dart';
 
 void main() async {
@@ -45,6 +47,8 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           routes: {
             GameDetailsPage.route: (_) => const GameDetailsPage(),
+            AllGameListPage.route: (_) => const AllGameListPage(),
+            NewGameListPage.route: (_) => const NewGameListPage(),
           },
           home: const HomePage(),
         ),

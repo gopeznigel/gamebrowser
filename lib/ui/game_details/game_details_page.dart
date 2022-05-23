@@ -81,6 +81,7 @@ class GameDetailsPage extends StatelessWidget {
                 padding: EdgeInsets.only(
                     right: 20, left: !isFirstScreenshot ? 0 : 20),
                 child: ScreenshotImage(
+                  key: UniqueKey(),
                   width: width,
                   height: height,
                   imageUrl: ss.image,
@@ -183,10 +184,11 @@ class GameDetailsPage extends StatelessWidget {
                             ],
                           ),
                           _maxSpace,
-                          CommonDetailsContainer(
-                            title: 'Age Rating',
-                            details: [state.gameDto!.esrbRating!],
-                          ),
+                          if (state.gameDto!.esrbRating != null)
+                            CommonDetailsContainer(
+                              title: 'Age Rating',
+                              details: [state.gameDto!.esrbRating!],
+                            ),
                         ],
                       ),
                     )
@@ -211,7 +213,7 @@ class GameDetailsPage extends StatelessWidget {
                     elevation: 0.0,
                     automaticallyImplyLeading: false,
                     leading: _backButton,
-                    backgroundColor: AppColors.gray,
+                    backgroundColor: AppColors.scaffoldBg,
                     flexibleSpace: FlexibleSpaceBar(
                       background: Hero(
                         tag: state.gameDto!.backgroundImage!,

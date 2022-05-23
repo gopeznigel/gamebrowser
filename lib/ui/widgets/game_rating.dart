@@ -16,7 +16,7 @@ class GameRating extends StatelessWidget {
     return RatingBarIndicator(
       rating: rating,
       itemBuilder: (context, index) => const Icon(
-        Icons.star,
+        Icons.star_rounded,
         color: Colors.amber,
       ),
       itemCount: 5,
