@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:game_browser_using_bloc/models/game_dto.dart';
@@ -16,8 +15,8 @@ class GameService {
 
       if (response.statusCode == 200) {
         if (response.body.isNotEmpty) {
-          return serializers.deserializeWith(
-              GenresDto.serializer, json.decode(response.body));
+          return serializers.deserializeWith(GenresDto.serializer,
+              json.decode(utf8.decode(response.bodyBytes)));
         } else {
           throw Exception('Empty response');
         }
@@ -42,10 +41,8 @@ class GameService {
 
       if (response.statusCode == 200) {
         if (response.body.isNotEmpty) {
-          final data = utf8.decode(response.bodyBytes);
-          final decoded = json.decode(data);
-
-          return serializers.deserializeWith(GamesDto.serializer, decoded);
+          return serializers.deserializeWith(GamesDto.serializer,
+              json.decode(utf8.decode(response.bodyBytes)));
         } else {
           throw Exception('Empty response');
         }
@@ -64,11 +61,8 @@ class GameService {
 
       if (response.statusCode == 200) {
         if (response.body.isNotEmpty) {
-          final data = utf8.decode(response.bodyBytes);
-          final decoded = json.decode(data);
-
-          return serializers.deserializeWith(
-              GameDetailsDto.serializer, decoded);
+          return serializers.deserializeWith(GameDetailsDto.serializer,
+              json.decode(utf8.decode(response.bodyBytes)));
         } else {
           throw Exception('Empty response');
         }
@@ -86,10 +80,8 @@ class GameService {
 
       if (response.statusCode == 200) {
         if (response.body.isNotEmpty) {
-          final data = utf8.decode(response.bodyBytes);
-          final decoded = json.decode(data);
-
-          return serializers.deserializeWith(GamesDto.serializer, decoded);
+          return serializers.deserializeWith(GamesDto.serializer,
+              json.decode(utf8.decode(response.bodyBytes)));
         } else {
           throw Exception('Empty response');
         }
