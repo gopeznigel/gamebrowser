@@ -14,6 +14,7 @@ class NewGameListPage extends StatelessWidget {
           return GameListView(
             type: GameListType.newGames,
             games: state.games!,
+            showCategories: false,
           );
         },
       );

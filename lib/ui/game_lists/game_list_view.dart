@@ -4,16 +4,21 @@ import 'package:game_browser_using_bloc/blocs/genres/genre_bloc.dart';
 import 'package:game_browser_using_bloc/blocs/view_game/view_game_bloc.dart';
 import 'package:game_browser_using_bloc/models/game_dto.dart';
 import 'package:game_browser_using_bloc/repositories/game_repository.dart';
-import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
+import 'package:game_browser_using_bloc/ui/game_lists/widgets/category_tile.dart';
 import 'package:game_browser_using_bloc/ui/game_lists/widgets/game_tile.dart';
 
 class GameListView extends StatelessWidget {
-  const GameListView({Key? key, required this.type, required this.games})
-      : super(key: key);
+  const GameListView({
+    Key? key,
+    required this.type,
+    required this.games,
+    this.showCategories = true,
+  }) : super(key: key);
 
   final GameListType type;
   final GamesDto games;
+  final bool showCategories;
 
   @override
   Widget build(BuildContext context) {
@@ -35,25 +40,31 @@ class GameListView extends StatelessWidget {
                 style: TextStyles.header,
               ),
             ),
-            BlocBuilder<GenreBloc, GenreState>(
-              builder: (context, state) {
-                if (state.status.isLoaded) {
-                  return SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
+            if (showCategories)
+              BlocBuilder<GenreBloc, GenreState>(
+                builder: (context, state) {
+                  if (state.status.isLoaded) {
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
                         children: state.genres!.results!
-                            .map((res) => Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: _genreSelector(
-                                      res.imageBackground!, res.name!),
-                                ))
-                            .toList()),
-                  );
-                }
+                            .map(
+                              (res) => CategoryTile(
+                                urlImage: res.imageBackground!,
+                                categoryName: res.name!,
+                                onTap: () {
+                                  // load games by selected category
+                                },
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    );
+                  }
 
-                return const SizedBox();
-              },
-            ),
+                  return const SizedBox();
+                },
+              ),
             Expanded(
               child: ListView(
                 children: List.generate(
@@ -73,53 +84,6 @@ class GameListView extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _genreSelector(String urlImage, String name) {
-    return SizedBox(
-      height: 60,
-      width: 140,
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(10),
-              bottomLeft: Radius.circular(10),
-            ),
-            child: Container(
-              height: 60,
-              width: 60,
-              color: AppColors.gray,
-              child: Image.network(
-                urlImage,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Container(
-            width: 80,
-            height: 60,
-            padding: const EdgeInsets.all(8),
-            decoration: const BoxDecoration(
-              color: Colors.black87,
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(10),
-                bottomRight: Radius.circular(10),
-              ),
-            ),
-            child: Center(
-              child: Text(
-                name,
-                style: TextStyles.subTitle.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
