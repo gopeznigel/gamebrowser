@@ -6,6 +6,9 @@ This project is for the purpose of implementing Bloc Pattern state management.
 
 ![](sample.gif)
 
+## Try the app
+Download the app [here](https://drive.google.com/file/d/1GMFS74BwAit4bsXQGFJxX0KtNNnDxEC_/view?usp=sharing)
+
 ## Credits
 
 API
