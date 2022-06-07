@@ -10,15 +10,18 @@ class CategoryTile extends StatelessWidget {
     required this.urlImage,
     required this.categoryName,
     required this.onTap,
+    required this.selected,
   }) : super(key: key);
 
   final String urlImage;
   final String categoryName;
+  final bool selected;
   final OnCategoryTap onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SizedBox(
@@ -45,11 +48,15 @@ class CategoryTile extends StatelessWidget {
                 width: 80,
                 height: 60,
                 padding: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Colors.black87,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(10),
                     bottomRight: Radius.circular(10),
+                  ),
+                  border: Border.all(
+                    color: selected ? AppColors.ratings : Colors.black,
+                    width: 3,
                   ),
                 ),
                 child: Center(

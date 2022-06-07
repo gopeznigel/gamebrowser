@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_browser_using_bloc/blocs/games/game_bloc.dart';
 import 'package:game_browser_using_bloc/models/game_dto.dart';
 import 'package:game_browser_using_bloc/repositories/game_repository.dart';
 
@@ -8,8 +9,10 @@ part 'genre_state.dart';
 
 class GenreBloc extends Bloc<GenreEvent, GenreState> {
   final GameRepository repository;
+  final GameBloc gameBloc;
 
-  GenreBloc({required this.repository}) : super(const GenreState()) {
+  GenreBloc({required this.repository, required this.gameBloc})
+      : super(const GenreState()) {
     on<GetAllGenres>(_handleGetAllGenres);
     on<SelectGenre>(_handleSelectGenre);
   }
@@ -28,5 +31,7 @@ class GenreBloc extends Bloc<GenreEvent, GenreState> {
 
   void _handleSelectGenre(SelectGenre event, Emitter<GenreState> emit) {
     emit(state.copyWith(selectedGenre: event.selectedGenre));
+
+    gameBloc.add(GetGamesByGenre(genreId: event.selectedGenre.id));
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_browser_using_bloc/blocs/games/game_bloc.dart';
 import 'package:game_browser_using_bloc/blocs/genres/genre_bloc.dart';
 import 'package:game_browser_using_bloc/blocs/view_game/view_game_bloc.dart';
 import 'package:game_browser_using_bloc/models/game_dto.dart';
@@ -23,8 +24,10 @@ class GameListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<GenreBloc>(
-      create: (context) => GenreBloc(repository: context.read<GameRepository>())
-        ..add(GetAllGenres()),
+      create: (context) => GenreBloc(
+        repository: context.read<GameRepository>(),
+        gameBloc: context.read<GameBloc>(),
+      )..add(GetAllGenres()),
       child: Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -35,9 +38,25 @@ class GameListView extends StatelessWidget {
                 left: 20,
                 bottom: 10,
               ),
-              child: Text(
-                type == GameListType.newGames ? 'New Releases' : 'All Games',
-                style: TextStyles.header,
+              child: BlocBuilder<GenreBloc, GenreState>(
+                builder: (context, state) {
+                  return Row(
+                    children: [
+                      Text(
+                        type == GameListType.newGames
+                            ? 'New Releases'
+                            : 'All Games',
+                        style: TextStyles.header,
+                      ),
+                      const SizedBox(width: 10),
+                      if (state.selectedGenre != null)
+                        Text(
+                          '(${state.selectedGenre!.name})',
+                          style: TextStyles.header,
+                        ),
+                    ],
+                  );
+                },
               ),
             ),
             if (showCategories)
@@ -52,8 +71,15 @@ class GameListView extends StatelessWidget {
                               (res) => CategoryTile(
                                 urlImage: res.imageBackground!,
                                 categoryName: res.name!,
+                                selected: state.selectedGenre == res,
                                 onTap: () {
+                                  debugPrint(
+                                      'Getting games with genre[${res.name}]');
+
                                   // load games by selected category
+                                  context
+                                      .read<GenreBloc>()
+                                      .add(SelectGenre(selectedGenre: res));
                                 },
                               ),
                             )
