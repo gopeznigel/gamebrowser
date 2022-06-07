@@ -10,6 +10,7 @@ import 'package:game_browser_using_bloc/ui/game_details/game_details_page.dart';
 import 'package:game_browser_using_bloc/ui/game_lists/all_game_list_page.dart';
 import 'package:game_browser_using_bloc/ui/game_lists/new_game_list_page.dart';
 import 'package:game_browser_using_bloc/ui/home/home_page.dart';
+import 'package:game_browser_using_bloc/ui/screenshot_viewer/screenshot_viewer_page.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
             GameDetailsPage.route: (_) => const GameDetailsPage(),
             AllGameListPage.route: (_) => const AllGameListPage(),
             NewGameListPage.route: (_) => const NewGameListPage(),
+            ScreenshotViewerPage.route: (_) => const ScreenshotViewerPage(),
           },
           home: const HomePage(),
         ),
