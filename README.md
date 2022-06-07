@@ -4,6 +4,8 @@ An app made from flutter. You can browse new released games, top games and brows
 
 This project is for the purpose of implementing Bloc Pattern state management.
 
+![](sample.gif)
+
 ## Credits
 
 API
