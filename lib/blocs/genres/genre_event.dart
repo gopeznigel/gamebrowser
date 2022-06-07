@@ -18,3 +18,8 @@ class SelectGenre extends GenreEvent {
   @override
   List<Object?> get props => [selectedGenre];
 }
+
+class ClearGenreSelection extends GenreEvent {
+  @override
+  List<Object?> get props => [];
+}

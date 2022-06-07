@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_browser_using_bloc/constants/strings.dart';
 import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
 
@@ -49,7 +50,7 @@ class _GameDescriptionContainerState extends State<GameDescriptionContainer> {
             });
           },
           child: Text(
-            _someTextsHidden ? 'Read more' : 'Read less',
+            _someTextsHidden ? readMoreText : readLessText,
             style: TextStyles.tag.copyWith(
               color: AppColors.selected,
               decoration: TextDecoration.underline,

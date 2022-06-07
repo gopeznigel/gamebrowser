@@ -15,6 +15,7 @@ class GenreBloc extends Bloc<GenreEvent, GenreState> {
       : super(const GenreState()) {
     on<GetAllGenres>(_handleGetAllGenres);
     on<SelectGenre>(_handleSelectGenre);
+    on<ClearGenreSelection>(_handleClearGenreSelection);
   }
 
   void _handleGetAllGenres(GetAllGenres event, Emitter<GenreState> emit) async {
@@ -33,5 +34,12 @@ class GenreBloc extends Bloc<GenreEvent, GenreState> {
     emit(state.copyWith(selectedGenre: event.selectedGenre));
 
     gameBloc.add(GetGamesByGenre(genreId: event.selectedGenre.id));
+  }
+
+  void _handleClearGenreSelection(
+      ClearGenreSelection event, Emitter<GenreState> emit) {
+    emit(state.copyWith(selectedGenre: null));
+
+    gameBloc.add(GetAllGames());
   }
 }

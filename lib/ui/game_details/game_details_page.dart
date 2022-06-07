@@ -2,6 +2,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_browser_using_bloc/blocs/view_game/view_game_bloc.dart';
+import 'package:game_browser_using_bloc/constants/strings.dart';
 import 'package:game_browser_using_bloc/models/game_dto.dart';
 import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
@@ -145,37 +146,37 @@ class GameDetailsPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CommonDetailsContainer(
-                            title: 'Platforms',
+                            title: platformsText,
                             details: state.gameDto!.platforms!
                                 .map((p) => p.platform!)
                                 .toList(),
                           ),
                           _maxSpace,
                           CommonDetailsContainer(
-                            title: 'Metscore',
+                            title: metascoreText,
                             details: [
-                              CommonDetailsDto().rebuild((d) =>
-                                  d.name = state.gameDto!.metacritic.toString())
+                              CommonDetailsDto().rebuild((d) => d.name =
+                                  state.gameDto!.metacritic?.toString() ?? '0')
                             ],
                           ),
                           _maxSpace,
                           CommonDetailsContainer(
-                            title: 'Developer',
+                            title: developerText,
                             details: state.gameDetails!.developers!.asList(),
                           ),
                           _maxSpace,
                           CommonDetailsContainer(
-                            title: 'Publisher',
+                            title: publisherText,
                             details: state.gameDetails!.publishers!.asList(),
                           ),
                           _maxSpace,
                           CommonDetailsContainer(
-                            title: 'Tags',
+                            title: tagsText,
                             details: state.gameDetails!.tags!.asList(),
                           ),
                           _maxSpace,
                           CommonDetailsContainer(
-                            title: 'Released Date',
+                            title: releasedDateText,
                             details: [
                               CommonDetailsDto().rebuild((d) => d.name =
                                   DateFormat('MMM dd, yyyy').format(
@@ -186,7 +187,7 @@ class GameDetailsPage extends StatelessWidget {
                           _maxSpace,
                           if (state.gameDto!.esrbRating != null)
                             CommonDetailsContainer(
-                              title: 'Age Rating',
+                              title: ageRatingText,
                               details: [state.gameDto!.esrbRating!],
                             ),
                         ],

@@ -1,5 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:game_browser_using_bloc/constants/strings.dart';
 import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
 import 'package:game_browser_using_bloc/ui/home/widgets/frosted_container.dart';
@@ -95,7 +96,7 @@ class _GameCollectionTileState extends State<GameCollectionTile>
           ),
         ),
         Text(
-          '(${CustomNumberFormatter().transformToCompact(double.tryParse(widget.reviewCount.toString()) ?? 0)} Reviews)',
+          '(${CustomNumberFormatter().transformToCompact(double.tryParse(widget.reviewCount.toString()) ?? 0)} $reviewsText)',
           textAlign: TextAlign.center,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,

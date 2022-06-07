@@ -29,7 +29,7 @@ class GenreState extends Equatable {
       GenreStatus? status}) {
     return GenreState(
       genres: genres ?? this.genres,
-      selectedGenre: selectedGenre ?? this.selectedGenre,
+      selectedGenre: selectedGenre,
       status: status ?? this.status,
     );
   }

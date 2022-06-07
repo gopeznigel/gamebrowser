@@ -1,5 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:game_browser_using_bloc/constants/strings.dart';
 import 'package:game_browser_using_bloc/styles/app_colors.dart';
 import 'package:game_browser_using_bloc/styles/text_styles.dart';
 import 'package:game_browser_using_bloc/ui/widgets/game_rating.dart';
@@ -113,7 +114,7 @@ class _GameTileState extends State<GameTile>
                     ),
                     const Spacer(),
                     Text(
-                      '$_compactReviewCount Review${widget.reviewCount > 1 ? 's' : ''}',
+                      '$_compactReviewCount $reviewText${widget.reviewCount > 1 ? 's' : ''}',
                       style: TextStyles.subTitle,
                     ),
                     const Spacer(flex: 3),
