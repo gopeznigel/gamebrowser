@@ -14,18 +14,3 @@ class SelectScreenshots extends ScreenshotEvent {
   @override
   List<Object?> get props => [screenshots];
 }
-
-class SelectPreviousScreenshot extends ScreenshotEvent {
-  @override
-  List<Object?> get props => [];
-}
-
-class SelectNextScreenshot extends ScreenshotEvent {
-  @override
-  List<Object?> get props => [];
-}
-
-class RemoveScreenshots extends ScreenshotEvent {
-  @override
-  List<Object?> get props => [];
-}

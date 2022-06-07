@@ -12,7 +12,6 @@ class NewGameBloc extends Bloc<NewGameEvent, NewGameState> {
   NewGameBloc({required this.repository}) : super(const NewGameState()) {
     on<GetAllNewGames>(_handleGetAllNewGames);
     on<SelectNewGame>(_handleSelectNewGame);
-    on<RemoveSelectedNewGame>(_handleRemoveSelectedNewGame);
   }
 
   void _handleGetAllNewGames(
@@ -30,10 +29,5 @@ class NewGameBloc extends Bloc<NewGameEvent, NewGameState> {
 
   void _handleSelectNewGame(SelectNewGame event, Emitter<NewGameState> emit) {
     emit(state.copyWith(selectedGame: event.gameDto));
-  }
-
-  void _handleRemoveSelectedNewGame(
-      RemoveSelectedNewGame event, Emitter<NewGameState> emit) {
-    emit(state.copyWith(selectedGame: null));
   }
 }

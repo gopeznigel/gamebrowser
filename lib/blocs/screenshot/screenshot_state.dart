@@ -10,25 +10,25 @@ extension ScreenshotStatusX on ScreenshotStatus {
 
 class ScreenshotState extends Equatable {
   final List<ShortScreenshotDto>? screenshots;
-  final int selectedIndex;
+  final int initialPage;
   final ScreenshotStatus status;
 
   const ScreenshotState({
     this.screenshots,
-    this.selectedIndex = 0,
+    this.initialPage = 0,
     this.status = ScreenshotStatus.initial,
   });
 
   @override
-  List<Object?> get props => [screenshots, selectedIndex, status];
+  List<Object?> get props => [screenshots, initialPage, status];
 
   ScreenshotState copyWith(
       {List<ShortScreenshotDto>? screenshots,
-      int? selectedIndex,
+      int? initialPage,
       ScreenshotStatus? status}) {
     return ScreenshotState(
-      screenshots: screenshots,
-      selectedIndex: selectedIndex ?? this.selectedIndex,
+      screenshots: screenshots ?? this.screenshots,
+      initialPage: initialPage ?? this.initialPage,
       status: status ?? this.status,
     );
   }

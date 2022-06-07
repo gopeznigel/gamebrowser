@@ -23,7 +23,7 @@ class ScreenshotViewerPage extends StatelessWidget {
         body: BlocBuilder<ScreenshotBloc, ScreenshotState>(
           builder: (context, state) {
             ExtendedPageController _controller =
-                ExtendedPageController(initialPage: state.selectedIndex);
+                ExtendedPageController(initialPage: state.initialPage);
 
             return ExtendedImageGesturePageView.builder(
               controller: _controller,
